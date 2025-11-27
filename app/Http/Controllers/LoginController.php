@@ -12,7 +12,6 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        // Biasanya route ini mengarahkan ke view di atas
         return view('login.login');
     }
 
@@ -34,8 +33,15 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            // Login Berhasil, arahkan ke dashboard
-            return redirect()->intended('/dashboard');
+            $user = Auth::user();
+
+            // Cek role: Jika admin, arahkan ke /dashboard
+            if ($user->role === 'admin') {
+            return redirect()->route('admin');
+            }
+
+            // Jika role BUKAN admin, arahkan ke / (halaman utama)
+            return redirect()->intended('/');
         }
 
         // 3. Login Gagal, kembalikan ke form dengan pesan error

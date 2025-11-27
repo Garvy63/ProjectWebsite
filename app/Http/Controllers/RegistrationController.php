@@ -17,7 +17,7 @@ class RegistrationController extends Controller
     {
         $request->validate([
             'email' => 'required|email|unique:users',
-            'name' => 'required|min:3|unique:users',
+            'name' => 'required|min:3',
             'password' => 'required|min:6',
         ]);
 
@@ -25,6 +25,7 @@ class RegistrationController extends Controller
             'email' => $request->email,
             'name' => $request->name,
             'password' => Hash::make($request->password),
+            'role' => 'user',
         ]);
 
         return redirect()->back()->with('success', 'Registrasi berhasil!');

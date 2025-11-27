@@ -34,3 +34,7 @@ Route::get('/register', [RegistrationController::class, 'showRegistrationForm'])
 
 // Route POST: Untuk memproses pengiriman data formulir
 Route::post('/register', [RegistrationController::class, 'register']);
+
+Route::get('/admindashboard', function () {
+    return view('admin.dashboard');
+})->middleware('auth')->name('admin');
