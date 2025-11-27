@@ -1,0 +1,6 @@
+{{-- Checkbox --}}
+<div class="col-md-12 form-group">
+    <div class="creat_account">
+    <input type="checkbox" id="f-option2" name="remember"> {{-- Ganti name="selector" menjadi name="remember" --}}
+    <label for="f-option2">Keep me logged in</label>
+</div>
