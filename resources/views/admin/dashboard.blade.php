@@ -1,1054 +1,465 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
+@extends('layouts.admin')
 
-<head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="CodePixar">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>Karma Shop</title>
+@section('content')
 
-	<!-- CSS -->
-    <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/nice-select.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/nouislider.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{{-- ==================== BAGIAN ATAS: 4 KARTU STATISTIK (DIPERBARUI) ==================== --}}
+<div class="row">
+    
+    {{-- KARTU WELCOME (Besar, Ambil 6 kolom) --}}
+    <div class="col-lg-6 mb-4">
+        <div class="card overflow-hidden" style="background-color: #f7a240; border-radius: 12px;">
+            <div class="row g-0">
+                {{-- Bagian Kiri: Teks --}}
+                <div class="col-sm-6">
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-semibold text-white">Welcome, {{ $user->name ?? 'Admin' }}!</h5>
+                        <div class="d-flex align-items-center gap-4 mt-4">
+                            <div class="text-center">
+                                <h4 class="mb-1 fs-4 fw-bold text-white">{{ $totalVisitors ?? 0 }}</h4>
+                                <p class="text-white mb-0 fs-4">Pengunjung</p>
+                            </div>
+                            <div class="text-center">
+                                <h4 class="mb-1 fs-4 fw-bold text-white">{{ $conversionRate ?? 0 }}%</h4>
+                                <p class="text-white mb-0 fs-4">Pengunjung - Pembeli</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- Bagian Kanan: Gambar --}}
+                <div class="col-sm-6 text-center position-relative">
+                    <div class="p-3 pt-4">
+                        <img src="{{ asset('admin_assets/assets/images/welcome/welcome.png') }}" 
+                             height="130" alt="welcome.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-</head>
+    {{-- WADAH UNTUK 3 KARTU KECIL (Ambil 6 kolom) --}}
+    <div class="col-lg-6">
+        <div class="row">
+            {{-- KARTU SALES (Hijau Muda) --}}
+            <div class="col-6 col-md-4 mb-4">
+                <div class="card h-100" style="background-color: #d5ff6c; border-radius: 12px;">
+                    <div class="card-body p-3">
+                        <div class="d-flex flex-column align-items-start">
+                            {{-- Icon Circle --}}
+                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" 
+                                 style="background-color: #84994F; width: 50px; height: 50px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                <i class="fas fa-history fs-5 text-white"></i>
+                            </div>
+                            
+                            {{-- Angka & Label --}}
+                            <h3 class="mb-1 fs-5 fw-bold text-dark">{{ $formattedSales ?? '0' }}</h3>
+                            <p class="mb-1 fs-4 text-secondary">Penjualan</p>
+                            
+                            {{-- Badge Persentase --}}
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="badge rounded-pill bg-success-subtle text-success fw-semibold" 
+                                      style="font-size: 0.75rem;">
+                                    {{ $salesGrowth ?? '0%' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<body>
+            {{-- KARTU REFUNDS (Kuning) --}}
+            <div class="col-6 col-md-4 mb-4">
+                <div class="card h-100" style="background-color: #FFE797; border-radius: 12px;">
+                    <div class="card-body p-3">
+                        <div class="d-flex flex-column align-items-start">
+                            {{-- Icon Circle --}}
+                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" 
+                                 style="background-color: #FCB53B; width: 50px; height: 50px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                <i class="fas fa-redo fs-5 text-white"></i>
+                            </div>
+                            
+                            {{-- Angka & Label --}}
+                            <h3 class="mb-1 fs-5 fw-bold text-dark">{{ $formattedRefunds ?? '0' }}</h3>
+                            <p class="mb-1 fs-4 text-secondary">Pengembalian</p>
+                            
+                            {{-- Badge Persentase --}}
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="badge rounded-pill bg-danger-subtle text-danger fw-semibold" 
+                                      style="font-size: 0.75rem;">
+                                    {{ $refundsGrowth ?? '0%' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<!-- Start Area -->
+            {{-- KARTU EARNINGS (Hijau) --}}
+            <div class="col-6 col-md-4 mb-4">
+                <div class="card h-100" style="background-color: #C1DBB3; border-radius: 12px;">
+                    <div class="card-body p-3">
+                        <div class="d-flex flex-column align-items-start">
+                            {{-- Icon Circle --}}
+                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" 
+                                 style="background-color: #84af6d; width: 50px; height: 50px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                <i class="fas fa-dollar-sign fs-5 text-white"></i>
+                            </div>
+                            
+                            {{-- Angka & Label --}}
+                            <h3 class="mb-1 fs-5 fw-bold text-dark">{{ $formattedEarnings ?? 'Rp0' }}</h3>
+                            <p class="mb-1 fs-4 text-secondary">Pemasukan</p>
+                            
+                            {{-- Badge Persentase (PROFIT GROWTH MoM) --}}
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="badge rounded-pill bg-success-subtle text-success fw-semibold" 
+                                      style="font-size: 0.75rem;">
+                                    {{ $earningsGrowth ?? '0%' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-@include('layouts.header')
+</div>
+{{-- ==================== END BAGIAN ATAS ==================== --}}
 
-	<!-- start features Area -->
-	<section class="features-area section_gap">
-		<div class="container">
-			<div class="row features-inner">
-				<!-- single features -->
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<div class="single-features">
-						<div class="f-icon">
-							<img src="img/features/f-icon1.png" alt="">
-						</div>
-						<h6>Free Delivery</h6>
-						<p>Free Shipping on all order</p>
-					</div>
-				</div>
-				<!-- single features -->
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<div class="single-features">
-						<div class="f-icon">
-							<img src="img/features/f-icon2.png" alt="">
-						</div>
-						<h6>Return Policy</h6>
-						<p>Free Shipping on all order</p>
-					</div>
-				</div>
-				<!-- single features -->
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<div class="single-features">
-						<div class="f-icon">
-							<img src="img/features/f-icon3.png" alt="">
-						</div>
-						<h6>24/7 Support</h6>
-						<p>Free Shipping on all order</p>
-					</div>
-				</div>
-				<!-- single features -->
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<div class="single-features">
-						<div class="f-icon">
-							<img src="img/features/f-icon4.png" alt="">
-						</div>
-						<h6>Secure Payment</h6>
-						<p>Free Shipping on all order</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- end features Area -->
+{{-- ==================== BAGIAN BAWAH: DASHBOARD eCommerce ==================== --}}
+<div class="row mt-4">
 
-	<!-- Start category Area -->
-	<section class="category-area">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-8 col-md-12">
-					<div class="row">
-						<div class="col-lg-8 col-md-8">
-							<div class="single-deal">
-								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c1.jpg" alt="">
-								<a href="img/category/c1.jpg" class="img-pop-up" target="_blank">
-									<div class="deal-details">
-										<h6 class="deal-title">Sneaker for Sports</h6>
-									</div>
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4">
-							<div class="single-deal">
-								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c2.jpg" alt="">
-								<a href="img/category/c2.jpg" class="img-pop-up" target="_blank">
-									<div class="deal-details">
-										<h6 class="deal-title">Sneaker for Sports</h6>
-									</div>
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4">
-							<div class="single-deal">
-								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c3.jpg" alt="">
-								<a href="img/category/c3.jpg" class="img-pop-up" target="_blank">
-									<div class="deal-details">
-										<h6 class="deal-title">Product for Couple</h6>
-									</div>
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-8 col-md-8">
-							<div class="single-deal">
-								<div class="overlay"></div>
-								<img class="img-fluid w-100" src="img/category/c4.jpg" alt="">
-								<a href="img/category/c4.jpg" class="img-pop-up" target="_blank">
-									<div class="deal-details">
-										<h6 class="deal-title">Sneaker for Sports</h6>
-									</div>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-deal">
-						<div class="overlay"></div>
-						<img class="img-fluid w-100" src="img/category/c5.jpg" alt="">
-						<a href="img/category/c5.jpg" class="img-pop-up" target="_blank">
-							<div class="deal-details">
-								<h6 class="deal-title">Sneaker for Sports</h6>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End category Area -->
+    {{-- KOLOM KIRI: Chart dan Laporan --}}
+    <div class="col-lg-8">
+        
+        {{-- Marketing Report Card --}}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="card-title mb-0">Keuntungan Penjualan</h5>
+                </div>
+                
+                {{-- Marketing Metrics (Keuntungan Tahunan) --}}
+                <div class="row mb-4">
+                    
+                    {{-- Slot 1: Keuntungan Tahun Ini (Total Rupiah PROFIT) --}}
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-chart-line text-primary"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Keuntungan Tahun Ini</h6> 
+                                {{-- Tampilkan Rupiah Total PROFIT TAHUN INI --}}
+                                @php
+                                    $profitTY = $marketingData['google_ads'] ?? 0;
+                                    $colorTY = $profitTY >= 0 ? 'text-success' : 'text-danger';
+                                @endphp
+                                <h4 class="mb-0 fw-bold {{ $colorTY }}">
+                                    {{ $profitTY >= 0 ? '+' : '' }}Rp{{ number_format(abs($profitTY), 0, ',', '.') }}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {{-- Slot 2: Keuntungan Tahun Lalu (Total Rupiah PROFIT) --}}
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="fas fa-calendar-alt text-success"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Keuntungan Tahun Lalu</h6> 
+                                {{-- Tampilkan Rupiah Total PROFIT TAHUN LALU --}}
+                                @php
+                                    $profitLY = $marketingData['referral'] ?? 0;
+                                    $colorLY = $profitLY >= 0 ? 'text-success' : 'text-danger';
+                                @endphp
+                                <h4 class="mb-0 fw-bold {{ $colorLY }}">
+                                    {{ $profitLY >= 0 ? '+' : '' }}Rp{{ number_format(abs($profitLY), 0, ',', '.') }}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                {{-- Chart (Sudah menggunakan data Profit) --}}
+                {{-- Wrapper untuk Scroll Horizontal --}}
+                <div style="overflow-x: auto;"> 
+                    <div class="chart-container" style="width: 1200px; height: 300px;">
+                        <canvas id="marketingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<!-- start product Area -->
-	<section class="owl-carousel active-product-area section_gap">
-		<!-- single product slide -->
-		<div class="single-product-slider">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-lg-6 text-center">
-						<div class="section-title">
-							<h1>Latest Products</h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua.</p>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p1.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+        {{-- Two Small Cards Row --}}
+        <div class="row">
+            {{-- Payments Card (Sekarang menunjukkan PROFIT 7 hari terakhir) --}}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="card-title mb-0">Laba 7 Hari Terakhir</h6>
+                            <span class="badge bg-light text-dark">Last 7 days</span>
+                        </div>
+                        {{-- Menampilkan Rupiah untuk Total PROFIT 7 Hari --}}
+                        @php
+                            $profit7Days = $paymentsLast7Days ?? 0;
+                            $color7 = $profit7Days >= 0 ? 'text-dark' : 'text-danger';
+                        @endphp
+                        <h2 class="fw-bold {{ $color7 }}">{{ $profit7Days >= 0 ? '' : '-' }}Rp{{ number_format(abs($profit7Days)) }}</h2>
+                        <div class="progress" style="height: 8px;">
+                            @php
+                                $progress = isset($paymentsLast7Days) ? min(($paymentsLast7Days / 20000000) * 100, 100) : 75; 
+                            @endphp
+                            <div class="progress-bar bg-success" style="width: {{ $progress }}%"></div>
+                        </div>
+                        <p class="text-muted small mt-2">+18.2% from last week</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p2.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+    </div>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p3.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p4.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+    {{-- KOLOM KANAN: Sidebar Info --}}
+    <div class="col-lg-4">
+        
+        {{-- Payment Methods Card (FIXED REAL DATA) --}}
+        @php
+            // Ambil data dari Controller
+            $paymentData = $paymentMethodDistribution ?? [];
+            
+            // Definisikan ikon dan warna untuk metode pembayaran (sesuai data DB kamu)
+            $methodIcons = [
+                'PayPal' => ['icon' => 'fab fa-paypal', 'color' => 'primary'],
+                'Credit Card' => ['icon' => 'far fa-credit-card', 'color' => 'info'],
+                'Dompet Digital' => ['icon' => 'fas fa-wallet', 'color' => 'warning'],
+                'Cash' => ['icon' => 'fas fa-money-bill', 'color' => 'success'],
+            ];
+            
+            // Ambil top 2 methods untuk display
+            $topMethodsToDisplay = array_slice($paymentData, 0, 2);
+            
+            // Hitung total persentase untuk progress bar
+            $totalPrimary = array_sum(array_column($paymentData, 'percentage'));
+            
+        @endphp
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p5.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Metode Pembayaran (Top 2)</h5>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    @foreach($topMethodsToDisplay as $i => $method)
+                        @php
+                            $details = $methodIcons[$method['name']] ?? ['icon' => 'fas fa-question', 'color' => 'secondary'];
+                        @endphp
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-{{ $details['color'] }} bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 40px; height: 40px;">
+                                <i class="{{ $details['icon'] }} text-{{ $details['color'] }}"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">{{ $method['name'] }}</h6>
+                                <p class="text-muted mb-0">{{ $method['percentage'] }}%</p>
+                            </div>
+                        </div>
+                    @endforeach
+                    @if(count($topMethodsToDisplay) == 1)
+                        {{-- Isi slot kosong jika hanya ada 1 data --}}
+                        <div class="d-flex align-items-center">
+                            <div style="width: 40px; height: 40px;"></div>
+                            <div><h6 class="mb-0">N/A</h6><p class="text-muted mb-0">0%</p></div>
+                        </div>
+                    @endif
+                </div>
+                
+                {{-- Progress Bar untuk semua metode yang ada --}}
+                <div class="progress" style="height: 10px;">
+                    @php
+                        $processedWidth = 0;
+                    @endphp
+                    @foreach($paymentData as $method)
+                        <div class="progress-bar bg-{{ $methodIcons[$method['name']]['color'] ?? 'secondary' }}" 
+                             style="width: {{ $method['percentage'] }}%"
+                             role="progressbar" aria-valuenow="{{ $method['percentage'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        @php
+                            $processedWidth += $method['percentage'];
+                        @endphp
+                    @endforeach
+                    {{-- Sisanya (jika total < 100 karena pembulatan) --}}
+                    @if(100 - $processedWidth > 0)
+                        <div class="progress-bar bg-secondary" style="width: {{ 100 - $processedWidth }}%" role="progressbar"></div>
+                    @endif
+                </div>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p6.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+                <small class="text-muted mt-2 d-block">
+                    *Persentase dari total pendapatan order completed.
+                </small>
+            </div>
+        </div>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p7.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+        {{-- Top Performing Products (Laba Kotor) --}}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Top Performing Products (Laba)</h5>
+                
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Sales (Qty)</th>
+                                <th>Laba</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($topProducts ?? [] as $product)
+                            <tr>
+                                <td>{{ $product['name'] ?? 'Product' }}</td>
+                                <td>
+                                    <span class="badge bg-primary">
+                                        {{ $product['category'] ?? 'Category' }}
+                                    </span>
+                                </td>
+                                <td>{{ number_format($product['sales'] ?? 0) }}</td>
+                                @php
+                                    $profitProduct = $product['earnings'] ?? 0;
+                                    $colorProduct = $profitProduct >= 0 ? 'text-success' : 'text-danger';
+                                @endphp
+                                <td class="{{ $colorProduct }} fw-bold">
+                                    {{ $profitProduct >= 0 ? '+' : '' }}Rp{{ number_format($profitProduct) }} 
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p8.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+        {{-- Recent Transactions (Profit/Loss) --}}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Laba/Rugi Transaksi Terbaru</h5>
+                
+                @foreach($recentTransactions ?? [] as $transaction)
+                <div class="d-flex align-items-center mb-3">
+                    @php
+                        $isPositive = ($transaction['amount'] ?? 0) >= 0;
+                        $iconClass = $isPositive ? 'text-success' : 'text-danger';
+                        $bgClass = $isPositive ? 'bg-success' : 'bg-danger';
+                        $icon = 'fas fa-exchange-alt';
+                        if (($transaction['type'] ?? '') == 'Refund') $icon = 'fas fa-undo-alt';
+                        if (($transaction['type'] ?? '') == 'Pending') $icon = 'fas fa-clock';
+                        if (($transaction['type'] ?? '') == 'Payment') $icon = 'fas fa-money-check-alt';
+                    @endphp
+                    
+                    <div class="rounded-circle {{ $bgClass }}-subtle d-flex align-items-center justify-content-center me-3" 
+                         style="width: 50px; height: 50px;">
+                        <i class="{{ $icon }} {{ $iconClass }}"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">{{ $transaction['type'] ?? 'Transaction' }}</h6>
+                        <p class="text-muted mb-0">{{ $transaction['description'] ?? 'Description' }}</p>
+                    </div>
+                    <div class="text-end">
+                        <h5 class="mb-0 {{ $iconClass }}">
+                            {{-- Menggunakan format Rupiah lengkap dengan tanda +/- --}}
+                            {{ $isPositive ? '+' : '' }}Rp{{ number_format(abs($transaction['amount'] ?? 0)) }}
+                        </h5>
+                        <small class="text-muted">{{ $transaction['time'] ?? 'Recently' }}</small>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- single product slide -->
-		<div class="single-product-slider">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-lg-6 text-center">
-						<div class="section-title">
-							<h1>Coming Products</h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua.</p>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p6.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+    </div>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p8.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+</div>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p3.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+{{-- Chart.js Script --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('marketingChart').getContext('2d');
+        
+        // Data dari Controller
+        const chartData = @json($chartData);
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p5.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
+        const marketingChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [
+                    {
+                        // Dataset 1: Total Profit (Uang)
+                        label: chartData.datasets[0].label,
+                        data: chartData.datasets[0].data,
+                        borderColor: '#4e73df',
+                        backgroundColor: 'rgba(78, 115, 223, 0.05)',
+                        tension: 0.4,
+                        yAxisID: 'y'
+                    }, 
+                    {
+                        // Dataset 2: Total Orders (Count)
+                        label: chartData.datasets[1].label,
+                        data: chartData.datasets[1].data,
+                        borderColor: '#1cc88a',
+                        backgroundColor: 'rgba(28, 200, 138, 0.05)',
+                        tension: 0.4,
+                        yAxisID: 'y1' 
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: true } }, 
+                scales: {
+                    x: { grid: { display: false } },
+                    // Y-Axis Kiri (Untuk Profit)
+                    y: { 
+                        beginAtZero: true, 
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Profit (Rp)'
+                        },
+                        ticks: {
+                            callback: function(value, index, ticks) {
+                                // Format angka menjadi Rupiah
+                                if (value >= 1000000) {
+                                    return 'Rp' + (value/1000000).toLocaleString('id-ID') + ' Jt';
+                                } else if (value >= 1000) {
+                                    return 'Rp' + (value/1000).toLocaleString('id-ID') + ' Rb';
+                                }
+                                return 'Rp' + value.toLocaleString('id-ID');
+                            }
+                        }
+                    },
+                    // Y-Axis Kanan (Untuk Order Count)
+                    y1: {
+                        beginAtZero: true,
+                        position: 'right', 
+                        title: {
+                            display: true,
+                            text: 'Orders (Count)'
+                        },
+                        grid: {
+                            drawOnChartArea: false 
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
 
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p1.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p4.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p1.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- single product -->
-					<div class="col-lg-3 col-md-6">
-						<div class="single-product">
-							<img class="img-fluid" src="img/product/p8.jpg" alt="">
-							<div class="product-details">
-								<h6>addidas New Hammer sole
-									for Sports person</h6>
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<div class="prd-bottom">
-
-									<a href="" class="social-info">
-										<span class="ti-bag"></span>
-										<p class="hover-text">add to bag</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-heart"></span>
-										<p class="hover-text">Wishlist</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-sync"></span>
-										<p class="hover-text">compare</p>
-									</a>
-									<a href="" class="social-info">
-										<span class="lnr lnr-move"></span>
-										<p class="hover-text">view more</p>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- end product Area -->
-
-	<!-- Start exclusive deal Area -->
-	<section class="exclusive-deal-area">
-		<div class="container-fluid">
-			<div class="row justify-content-center align-items-center">
-				<div class="col-lg-6 no-padding exclusive-left">
-					<div class="row clock_sec clockdiv" id="clockdiv">
-						<div class="col-lg-12">
-							<h1>Exclusive Hot Deal Ends Soon!</h1>
-							<p>Who are in extremely love with eco friendly system.</p>
-						</div>
-						<div class="col-lg-12">
-							<div class="row clock-wrap">
-								<div class="col clockinner1 clockinner">
-									<h1 class="days">150</h1>
-									<span class="smalltext">Days</span>
-								</div>
-								<div class="col clockinner clockinner1">
-									<h1 class="hours">23</h1>
-									<span class="smalltext">Hours</span>
-								</div>
-								<div class="col clockinner clockinner1">
-									<h1 class="minutes">47</h1>
-									<span class="smalltext">Mins</span>
-								</div>
-								<div class="col clockinner clockinner1">
-									<h1 class="seconds">59</h1>
-									<span class="smalltext">Secs</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<a href="/category" class="primary-btn">Shop Now</a>
-				</div>
-				<div class="col-lg-6 no-padding exclusive-right">
-					<div class="active-exclusive-product-slider">
-						<!-- single exclusive carousel -->
-						<div class="single-exclusive-slider">
-							<img class="img-fluid" src="img/product/e-p1.png" alt="">
-							<div class="product-details">
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<h4>addidas New Hammer sole
-									for Sports person</h4>
-								<div class="add-bag d-flex align-items-center justify-content-center">
-									<a class="add-btn" href=""><span class="ti-bag"></span></a>
-									<span class="add-text text-uppercase">Add to Bag</span>
-								</div>
-							</div>
-						</div>
-						<!-- single exclusive carousel -->
-						<div class="single-exclusive-slider">
-							<img class="img-fluid" src="img/product/e-p1.png" alt="">
-							<div class="product-details">
-								<div class="price">
-									<h6>$150.00</h6>
-									<h6 class="l-through">$210.00</h6>
-								</div>
-								<h4>addidas New Hammer sole
-									for Sports person</h4>
-								<div class="add-bag d-flex align-items-center justify-content-center">
-									<a class="add-btn" href=""><span class="ti-bag"></span></a>
-									<span class="add-text text-uppercase">Add to Bag</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End exclusive deal Area -->
-
-	<!-- Start brand Area -->
-	<section class="brand-area section_gap">
-		<div class="container">
-			<div class="row">
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="img/brand/1.png" alt="">
-				</a>
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="img/brand/2.png" alt="">
-				</a>
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="img/brand/3.png" alt="">
-				</a>
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="img/brand/4.png" alt="">
-				</a>
-				<a class="col single-img" href="#">
-					<img class="img-fluid d-block mx-auto" src="img/brand/5.png" alt="">
-				</a>
-			</div>
-		</div>
-	</section>
-	<!-- End brand Area -->
-
-	<!-- Start related-product Area -->
-	<section class="related-product-area section_gap_bottom">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-6 text-center">
-					<div class="section-title">
-						<h1>Deals of the Week</h1>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-							magna aliqua.</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-9">
-					<div class="row">
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r1.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r2.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r3.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r5.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r6.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r7.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r9.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r10.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
-							<div class="single-related-product d-flex">
-								<a href="#"><img src="img/r11.jpg" alt=""></a>
-								<div class="desc">
-									<a href="#" class="title">Black lace Heels</a>
-									<div class="price">
-										<h6>$189.00</h6>
-										<h6 class="l-through">$210.00</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="ctg-right">
-						<a href="#" target="_blank">
-							<img class="img-fluid d-block mx-auto" src="img/category/c5.jpg" alt="">
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End related-product Area -->
-
-	<!-- start footer Area -->
-	<footer class="footer-area section_gap">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3  col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>About Us</h6>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore
-							magna aliqua.
-						</p>
-					</div>
-				</div>
-				<div class="col-lg-4  col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>Newsletter</h6>
-						<p>Stay update with our latest</p>
-						<div class="" id="mc_embed_signup">
-
-							<form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-							 method="get" class="form-inline">
-
-								<div class="d-flex flex-row">
-
-									<input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-									 required="" type="email">
-
-
-									<button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
-									<div style="position: absolute; left: -5000px;">
-										<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-									</div>
-
-									<!-- <div class="col-lg-4 col-md-4">
-												<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-											</div>  -->
-								</div>
-								<div class="info"></div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3  col-md-6 col-sm-6">
-					<div class="single-footer-widget mail-chimp">
-						<h6 class="mb-20">Instragram Feed</h6>
-						<ul class="instafeed d-flex flex-wrap">
-							<li><img src="img/i1.jpg" alt=""></li>
-							<li><img src="img/i2.jpg" alt=""></li>
-							<li><img src="img/i3.jpg" alt=""></li>
-							<li><img src="img/i4.jpg" alt=""></li>
-							<li><img src="img/i5.jpg" alt=""></li>
-							<li><img src="img/i6.jpg" alt=""></li>
-							<li><img src="img/i7.jpg" alt=""></li>
-							<li><img src="img/i8.jpg" alt=""></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>Follow Us</h6>
-						<p>Let us be social</p>
-						<div class="footer-social d-flex align-items-center">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-dribbble"></i></a>
-							<a href="#"><i class="fa fa-behance"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-				<p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</p>
-			</div>
-		</div>
-	</footer>
-	<!-- End footer Area -->
-
-	<!-- End Area -->
-
-    <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
-    <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.ajaxchimp.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.nice-select.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.sticky.js') }}"></script>
-    <script src="{{ asset('js/nouislider.min.js') }}"></script>
-    <script src="{{ asset('js/countdown.js') }}"></script>
-    <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/gmaps.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-</body>
-
-</html>
+@endsection
