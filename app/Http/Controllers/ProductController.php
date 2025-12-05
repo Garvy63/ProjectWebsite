@@ -7,18 +7,12 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // =========================
-    // FRONTEND
-    // =========================
     public function frontendIndex()
     {
         $products = Product::orderBy('product_id', 'desc')->paginate(12);
         return view('index.index', compact('products'));
     }
 
-    // =========================
-    // ADMIN CRUD
-    // =========================
     public function index()
     {
         $products = Product::orderBy('product_id', 'desc')->paginate(10);
@@ -130,7 +124,6 @@ class ProductController extends Controller
 
     public function showBanner()
     {
-        // Ambil produk terbaru
         $latestProduct = Product::orderBy('created_at', 'desc')->first();
 
         return view('index.banner', compact('latestProduct'));

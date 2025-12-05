@@ -5792,8 +5792,22 @@ label {
 
 .single-prd-item img {
     max-width: 100%;
-    height: auto;  
+    height: auto;
     display: block;
 }
+
+.input-text.qty {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+}
+.gray_btn {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+
 
 /*# sourceMappingURL=main.css.map */

@@ -10,7 +10,7 @@ use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController; // FIX: Mengatasi Class App\Http\Controllers\Controller not found
 
-class AdminController extends BaseController 
+class AdminController extends BaseController
 {
     // Fungsi pembantu untuk memformat Rupiah
     private function formatRupiah($value)
@@ -29,7 +29,7 @@ class AdminController extends BaseController
             return $current > 0 ? '+100%' : '0%';
         }
     }
-    
+
     // FUNGSI PROFIT BULANAN (Menghitung Laba Kotor untuk Chart Dashboard)
     private function getMonthlyProfit($year, $monthCount = 7)
     {
@@ -50,12 +50,12 @@ class AdminController extends BaseController
         $profits = [];
         $labels = [];
         $startMonth = Carbon::now()->subMonths($monthCount - 1)->startOfMonth();
-        
+
         for ($i = 0; $i < $monthCount; $i++) {
             $currentMonth = $startMonth->copy()->addMonths($i);
             $monthIndex = $currentMonth->month;
-            
-            $labels[] = $currentMonth->shortLocaleMonth; 
+
+            $labels[] = $currentMonth->shortLocaleMonth;
             $profits[] = $monthlyProfitData->get($monthIndex)->profit ?? 0;
         }
 
@@ -64,7 +64,7 @@ class AdminController extends BaseController
             'data' => $profits
         ];
     }
-    
+
     // FUNGSI UNTUK AMBIL DATA CHART BULANAN (Total Orders)
     private function getMonthlyOrders($year, $monthCount = 7)
     {
@@ -81,7 +81,7 @@ class AdminController extends BaseController
 
         $orders = [];
         $startMonth = Carbon::now()->subMonths($monthCount - 1)->startOfMonth();
-        
+
         for ($i = 0; $i < $monthCount; $i++) {
             $currentMonth = $startMonth->copy()->addMonths($i);
             $monthIndex = $currentMonth->month;
@@ -98,19 +98,19 @@ class AdminController extends BaseController
         $user = Auth::user();
         $currentYear = Carbon::now()->year;
         $previousYear = Carbon::now()->subYear()->year;
-        
+
         $totalVisitors = 0; $formattedSales = '0'; $formattedRefunds = '0'; $formattedEarnings = 'Rp0';
         $salesGrowth = '0%'; $refundsGrowth = '0%'; $earningsGrowth = '0%'; $conversionRate = 0;
-        $marketingData = ['google_ads' => 0, 'referral' => 0]; 
+        $marketingData = ['google_ads' => 0, 'referral' => 0];
         $paymentsLast7Days = 0; $annualConversionRate = 0;
-        $topProducts = []; $recentTransactions = []; 
-        $chartData = ['labels' => ['Jan'], 'datasets' => [['label' => 'Profit', 'data' => [0]], ['label' => 'Orders', 'data' => [0]]]]; 
-        $paymentMethodDistribution = []; 
+        $topProducts = []; $recentTransactions = [];
+        $chartData = ['labels' => ['Jan'], 'datasets' => [['label' => 'Profit', 'data' => [0]], ['label' => 'Orders', 'data' => [0]]]];
+        $paymentMethodDistribution = [];
         // --------------------------------------------------
 
         try {
             $user = Auth::user();
-            
+
             // ===================================================
             // 1. DATA STATISTIK UTAMA (Kartu Hijau/Kuning) - Real
             // ===================================================
@@ -121,10 +121,10 @@ class AdminController extends BaseController
             $formattedRefunds = number_format($totalRefunds);
             $totalEarningsValue = Order::where('status', 'completed')->sum('total_amount');
             $formattedEarnings = $this->formatRupiah($totalEarningsValue); // Total Pemasukan (Gross Revenue)
-            
+
             $totalBuyers = DB::table('orders')->where('status', 'completed')->distinct('customer_id')->count('customer_id');
             $conversionRate = $totalVisitors > 0 ? round(($totalBuyers / $totalVisitors) * 100, 2) : 0;
-            
+
             // ===================================================
             // 2. PERHITUNGAN PERTUMBUHAN (PROFIT/MoM) - Real
             // ===================================================
@@ -145,7 +145,7 @@ class AdminController extends BaseController
                 ->whereMonth('orders.order_date', $previousMonth)
                 ->whereYear('orders.order_date', $currentYear)
                 ->sum(DB::raw('order_items.item_total - (order_items.unit_cost * order_items.quantity)'));
-            
+
             $earningsGrowth = $this->calculateGrowth($profitCurrentMonth, $profitPreviousMonth); // MoM Profit Growth
 
             $salesCurrentMonth = Order::where('status', 'completed')->whereMonth('order_date', $currentMonth)->whereYear('order_date', $currentYear)->count();
@@ -158,7 +158,7 @@ class AdminController extends BaseController
             // ===================================================
             // 3. DATA KEUNTUNGAN TAHUNAN (Laba Kotor) - Real
             // ===================================================
-            
+
             $profitThisYearValue = DB::table('order_items')
                 ->join('orders', 'order_items.order_id', '=', 'orders.order_id')
                 ->where('orders.status', 'completed')
@@ -175,7 +175,7 @@ class AdminController extends BaseController
                 'google_ads' => $profitThisYearValue, // Keuntungan Tahun Ini (Laba Kotor)
                 'referral' => $profitLastYearValue,  // Keuntungan Tahun Lalu (Laba Kotor)
             ];
-            
+
             // ===================================================
             // 4. DISTRIBUSI PEMBAYARAN - Real
             // ===================================================
@@ -186,12 +186,12 @@ class AdminController extends BaseController
                 ->get();
 
             $totalRevenueCompleted = $paymentDistributionData->sum('total_revenue');
-            
-            $paymentMethodDistribution = []; 
-            
+
+            $paymentMethodDistribution = [];
+
             foreach ($paymentDistributionData as $payment) {
                 $percentage = $totalRevenueCompleted > 0 ? round(($payment->total_revenue / $totalRevenueCompleted) * 100) : 0;
-                
+
                 $paymentMethodDistribution[] = [
                     'name' => $payment->payment_method,
                     'percentage' => $percentage,
@@ -207,7 +207,7 @@ class AdminController extends BaseController
             // ===================================================
             // 5. DATA CHART LINE (PROFIT) & 6. DATA LAINNYA - Real
             // ===================================================
-            $profitChart = $this->getMonthlyProfit($currentYear); 
+            $profitChart = $this->getMonthlyProfit($currentYear);
             $ordersChart = $this->getMonthlyOrders($currentYear);
 
             $chartData = [
@@ -217,7 +217,7 @@ class AdminController extends BaseController
                     ['label' => 'Total Orders', 'data' => $ordersChart]
                 ]
             ];
-            
+
             // Payments Last 7 Days: total profit 7 hari terakhir
             $paymentsLast7Days = DB::table('order_items')
                 ->join('orders', 'order_items.order_id', '=', 'orders.order_id')
@@ -227,23 +227,23 @@ class AdminController extends BaseController
 
             $annualBuyers = DB::table('orders')->where('status', 'completed')->whereYear('order_date', $currentYear)->distinct('customer_id')->count('customer_id');
             $annualVisitors = User::whereYear('created_at', $currentYear)->count();
-            $annualConversionRate = $annualVisitors > 0 ? round(($annualBuyers / $annualVisitors) * 100, 1) : 0; 
-            
+            $annualConversionRate = $annualVisitors > 0 ? round(($annualBuyers / $annualVisitors) * 100, 1) : 0;
+
             // Recent Transactions (Profit per transaksi)
             $recentTransactions = [];
             $recentOrders = Order::whereIn('status', ['completed', 'pending', 'refunded'])->orderBy('order_date', 'desc')->take(3)->get();
-                
+
             foreach ($recentOrders as $order) {
                 $profit = 0;
                 if ($order->status == 'completed' || $order->status == 'refunded') {
                     $profitItems = DB::table('order_items')
                         ->where('order_id', $order->order_id)
                         ->sum(DB::raw('item_total - (unit_cost * quantity)'));
-                    
+
                     $profit = $order->status == 'refunded' ? -$profitItems : $profitItems;
                 }
                 $type = $order->status == 'completed' ? 'Payment' : ($order->status == 'refunded' ? 'Refund' : 'Pending');
-                
+
                 $recentTransactions[] = [
                     'type' => $type,
                     'description' => 'Order #' . ($order->order_id ?? $order->id) . ' (' . ucfirst($order->status) . ')',
@@ -251,21 +251,21 @@ class AdminController extends BaseController
                     'time' => Carbon::parse($order->order_date)->diffForHumans()
                 ];
             }
-            
+
             if (empty($recentTransactions)) {
                 $recentTransactions = [
                     ['type' => 'Empty', 'description' => 'No Recent Transactions', 'amount' => 0, 'time' => 'now']
                 ];
             }
-            
+
             // Top Performing Products (Laba Kotor)
             $topProducts = DB::table('order_items')
                 ->join('products', 'order_items.product_id', '=', 'products.product_id')
                 ->join('orders', 'order_items.order_id', '=', 'orders.order_id')
                 ->select(
                     'products.product_name as name',
-                    'products.category as category', 
-                    DB::raw('SUM(order_items.quantity) as sales'), 
+                    'products.category as category',
+                    DB::raw('SUM(order_items.quantity) as sales'),
                     DB::raw('SUM(order_items.item_total - (order_items.unit_cost * order_items.quantity)) as earnings') // Laba Kotor
                 )
                 ->where('orders.status', 'completed')
@@ -273,9 +273,9 @@ class AdminController extends BaseController
                 ->orderBy('sales', 'desc')
                 ->take(4)
                 ->get()
-                ->map(fn($item) => (array)$item) 
+                ->map(fn($item) => (array)$item)
                 ->toArray();
-            
+
             if (empty($topProducts)) {
                  $topProducts = [
                     ['name' => 'No Product', 'category' => 'N/A', 'sales' => 0, 'earnings' => 0],
@@ -288,18 +288,18 @@ class AdminController extends BaseController
             $user = Auth::user();
             $totalVisitors = 0; $formattedSales = '0'; $formattedRefunds = '0'; $formattedEarnings = 'Rp0';
             $salesGrowth = '0%'; $refundsGrowth = '0%'; $earningsGrowth = '0%'; $conversionRate = 0;
-            $marketingData = ['google_ads' => 0, 'referral' => 0]; 
+            $marketingData = ['google_ads' => 0, 'referral' => 0];
             $paymentsLast7Days = 0; $annualConversionRate = 0;
             $topProducts = [['name' => 'Error', 'category' => 'Error', 'sales' => 0, 'earnings' => 0]];
             $recentTransactions = [['type' => 'Error', 'description' => 'Database Error', 'amount' => 0, 'time' => 'now']];
             $chartData = ['labels' => ['Jan'], 'datasets' => [['label' => 'Profit', 'data' => [0]], ['label' => 'Orders', 'data' => [0]]]];
             $paymentMethodDistribution = [['name' => 'Error', 'percentage' => 50], ['name' => 'Error', 'percentage' => 50]]; // Fallback for payment
-            
+
             // \Log::error('Dashboard Load Error: ' . $e->getMessage());
         }
-        
+
         return view('admin.dashboard', compact(
-            'user', 'totalVisitors', 'formattedSales', 'formattedRefunds', 'formattedEarnings', 
+            'user', 'totalVisitors', 'formattedSales', 'formattedRefunds', 'formattedEarnings',
             'salesGrowth', 'refundsGrowth', 'earningsGrowth', 'conversionRate',
             'marketingData', 'paymentsLast7Days', 'annualConversionRate',
             'topProducts', 'recentTransactions', 'chartData',

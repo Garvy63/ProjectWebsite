@@ -33,6 +33,20 @@
 
 <body>
     @include('layouts.header')
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Product Details Page</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/dashboard">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">product-details</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
     <!--================Single Product Area =================-->
     <div class="product_image_area">
         <div class="container">
@@ -65,20 +79,23 @@
                         </ul>
                         <p>{{ $product->description ?? 'Tidak ada deskripsi untuk produk ini.' }}</p>
 
-                        <div class="product_count">
-                            <label for="qty">Quantity:</label>
-                            <input type="text" name="qty" id="sst" maxlength="12" value="1"
-                                title="Quantity:" class="input-text qty">
-                            <button
-                                onclick="var result = document.getElementById('sst'); var sst = result.value; if(!isNaN(sst)) result.value++; return false;"
-                                class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                            <button
-                                onclick="var result = document.getElementById('sst'); var sst = result.value; if(!isNaN(sst) && sst > 0) result.value--; return false;"
-                                class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                        </div>
+                        <div class="card_area d-flex flex-column align-items-start">
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->product_id }}">
 
-                        <div class="card_area d-flex align-items-center">
-                            <a class="primary-btn" href="#">Add to Cart</a>
+                                <!-- Quantity control -->
+                                <div class="product_count d-inline-flex align-items-center">
+                                    <input class="input-number text-center mx-2" type="number" name="quantity"
+                                        value="1" min="1" max="{{ $product->stock ?? 100 }}"
+                                        style="width: 70px;">
+                                </div>
+
+                                <!-- Add to Cart button -->
+                                <div class="mt-3">
+                                    <button type="submit" class="btn primary-btn">Add to Cart</button>
+                                </div>
+                            </form>
                         </div>
 
                         <div class="mt-3">
@@ -181,6 +198,26 @@
     <script src="{{ asset('js/countdown.js') }}"></script>
     <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+
+    <script>
+        function incrementQty(el) {
+            const input = el.parentElement.querySelector('.input-number');
+            let value = parseInt(input.value) || 1;
+            const max = parseInt(input.max) || 100;
+            if (value < max) {
+                input.value = value + 1;
+            }
+        }
+
+        function decrementQty(el) {
+            const input = el.parentElement.querySelector('.input-number');
+            let value = parseInt(input.value) || 1;
+            const min = parseInt(input.min) || 1;
+            if (value > min) {
+                input.value = value - 1;
+            }
+        }
+    </script>
 
 </body>
 
