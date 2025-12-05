@@ -252,7 +252,7 @@
         align-items: flex-start;
         gap: 16px;
     }
-    
+
     .table-products {
         font-size: 13px;
     }
@@ -288,18 +288,19 @@
                 <h2 class="card-title">Daftar Produk</h2>
                 <span class="stats-badge">Total: {{ $products->total() }} produk</span>
             </div>
-            
+
             <div class="table-wrapper">
                 <table class="table-products">
                     <thead>
                         <tr>
                             <th style="width: 5%;">No</th>
                             <th style="width: 8%;">Foto</th>
-                            <th style="width: 8%;">ID</th>
-                            <th style="width: 30%;">Nama Produk</th>
+                            <th style="width: 20%;">Nama Produk</th>
                             <th style="width: 14%;">Kategori</th>
-                            <th style="width: 18%;">Harga</th>
-                            <th style="width: 17%;">Aksi</th>
+                            <th style="width: 20%;">Deskripsi</th>
+                            <th style="width: 8%;">Stok</th>
+                            <th style="width: 12%;">Harga</th>
+                            <th style="width: 15%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -308,15 +309,12 @@
                             <td>{{ $products->firstItem() + $index }}</td>
                             <td>
                                 @if($product->product_image)
-                                    <img src="{{ asset($product->product_image) }}" 
-                                         alt="{{ $product->product_name }}" 
+                                    <img src="{{ asset($product->product_image) }}"
+                                         alt="{{ $product->product_name }}"
                                          class="product-image">
                                 @else
                                     <div class="no-image">No Image</div>
                                 @endif
-                            </td>
-                            <td>
-                                <span class="badge-id">#{{ $product->product_id }}</span>
                             </td>
                             <td>
                                 <span class="product-name">{{ $product->product_name }}</span>
@@ -329,16 +327,26 @@
                                 @endif
                             </td>
                             <td>
+                                @if($product->description)
+                                    <span class="product-description">{{ Str::limit($product->description, 50) }}</span>
+                                @else
+                                    <span style="color: #999;">Tidak ada deskripsi</span>
+                                @endif
+                            </td>
+                            <td>
+                                <span class="stock">{{ $product->stock }}</span>
+                            </td>
+                            <td>
                                 <span class="price">Rp {{ number_format($product->unit_price, 0, ',', '.') }}</span>
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{{ route('admin.products.edit', $product->product_id) }}" 
+                                    <a href="{{ route('admin.products.edit', $product->product_id) }}"
                                        class="btn-sm btn-edit">
                                         Edit
                                     </a>
-                                    <form action="{{ route('admin.products.destroy', $product->product_id) }}" 
-                                          method="POST" 
+                                    <form action="{{ route('admin.products.destroy', $product->product_id) }}"
+                                          method="POST"
                                           style="display: inline;"
                                           onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
                                         @csrf
@@ -352,7 +360,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7">
+                            <td colspan="9">
                                 <div class="empty-state">
                                     <p class="empty-state-text">Belum ada produk</p>
                                     <p class="empty-state-hint">Klik tombol "Tambah Produk" untuk menambahkan produk baru</p>
@@ -363,7 +371,6 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="pagination">
                 {{ $products->links() }}
             </div>

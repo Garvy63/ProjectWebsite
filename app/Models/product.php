@@ -11,12 +11,14 @@ class Product extends Model
 
     protected $table = 'products';
     protected $primaryKey = 'product_id';
-    
+
     protected $fillable = [
         'product_name',
         'category',
-        'product_image',  // ← TAMBAHKAN INI
-        'unit_price'
+        'product_image',
+        'unit_price',
+        'description',
+        'stock'
     ];
 
     public $timestamps = false;

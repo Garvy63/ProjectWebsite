@@ -5790,4 +5790,10 @@ label {
   .footer-text i {
     color: #ffba00; }
 
+.single-prd-item img {
+    max-width: 100%;
+    height: auto;  
+    display: block;
+}
+
 /*# sourceMappingURL=main.css.map */

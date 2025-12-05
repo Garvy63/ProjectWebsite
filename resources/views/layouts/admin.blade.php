@@ -14,32 +14,25 @@
 
         <aside class="left-sidebar">
             <div>
-                <div class="brand-logo d-flex align-items-center justify-content-between">
-                    <a href="{{ route('admin') }}" class="text-nowrap logo-img"> <img src="{{ asset('admin_assets/assets/images/logos/logo.svg') }}" alt="KARMA Admin" width="180"/> 
-                    </a>
-                    <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-                        <i class="ti ti-x fs-8"></i>
-                    </div>
-                </div>
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                     <ul id="sidebarnav">
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
                             <span class="hide-menu">Home</span>
                         </li>
-                        
+
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('admin') }}" aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
                                 <span class="hide-menu">Dashboard Utama</span>
                             </a>
                         </li>
-                        
+
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
                             <span class="hide-menu">Manajemen Toko</span>
                         </li>
-                        
+
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/products" aria-expanded="false">
                                 <iconify-icon icon="solar:cart-3-line-duotone"></iconify-icon>
@@ -58,20 +51,20 @@
                             <span class="hide-menu">Auth</span>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route('logout') }}" 
+                            <a class="sidebar-link" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                aria-expanded="false">
                                 <iconify-icon icon="solar:login-3-line-duotone"></iconify-icon>
                                 <span class="hide-menu">Logout</span>
                             </a>
                         </li>
-                        
+
                         </ul>
                     </nav>
                 </div>
             </aside>
         <div class="body-wrapper">
-            
+
             <header class="app-header">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <ul class="navbar-nav">
@@ -93,7 +86,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                                     <div class="message-body">
-                                        <a href="{{ route('logout') }}" 
+                                        <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                             class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                                     </div>
@@ -105,9 +98,9 @@
             </header>
             <div class="body-wrapper-inner">
                 <div class="container-fluid">
-                    
-                    @yield('content') 
-                    
+
+                    @yield('content')
+
                     <div class="py-6 px-6 text-center">
                         <p class="mb-0 fs-4">Design and Developed by <a href="https://www.wrappixel.com/" target="_blank"
                                 class="pe-1 text-primary text-decoration-underline">Wrappixel.com</a></p>
@@ -116,11 +109,11 @@
             </div>
             </div>
     </div>
-    
+
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
-    
+
     <script src="{{ asset('admin_assets/assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('admin_assets/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin_assets/assets/js/sidebarmenu.js') }}"></script>

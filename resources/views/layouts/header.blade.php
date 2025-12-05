@@ -13,7 +13,7 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav ml-auto">
-							<li class="nav-item active"><a class="nav-link" href="{{ route('home')}}">Home</a></li>
+							<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Shop</a>
@@ -32,8 +32,7 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
-								<a href="/login" class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
-								 aria-expanded="false" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+								<a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 							</li>
 							<li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
 						</ul>

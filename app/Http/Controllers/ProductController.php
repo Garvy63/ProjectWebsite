@@ -4,10 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    // =========================
+    // FRONTEND
+    // =========================
+    public function frontendIndex()
+    {
+        $products = Product::orderBy('product_id', 'desc')->paginate(12);
+        return view('index.index', compact('products'));
+    }
+
+    // =========================
+    // ADMIN CRUD
+    // =========================
     public function index()
     {
         $products = Product::orderBy('product_id', 'desc')->paginate(10);
@@ -22,15 +33,16 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_name' => 'required|max:100',
-            'category' => 'nullable|max:50',
-            'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'unit_price' => 'required|numeric|min:0'
+            'product_name'  => 'required|string|max:100',
+            'category'      => 'nullable|string|max:50',
+            'product_image' => 'nullable|image|max:2048',
+            'unit_price'    => 'required|numeric|min:0',
+            'description'   => 'nullable|string|max:500',
+            'stock'         => 'required|integer|min:0',
         ]);
 
         $imagePath = null;
-        
-        // Upload gambar jika ada
+
         if ($request->hasFile('product_image')) {
             $image = $request->file('product_image');
             $imageName = time() . '_' . $image->getClientOriginalName();
@@ -39,10 +51,12 @@ class ProductController extends Controller
         }
 
         Product::create([
-            'product_name' => $request->product_name,
-            'category' => $request->category,
+            'product_name'  => $request->product_name,
+            'category'      => $request->category,
+            'unit_price'    => $request->unit_price,
+            'description'   => $request->description,
+            'stock'         => $request->stock,
             'product_image' => $imagePath,
-            'unit_price' => $request->unit_price
         ]);
 
         return redirect()->route('admin.products.index')
@@ -58,23 +72,23 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'product_name' => 'required|max:100',
-            'category' => 'nullable|max:50',
-            'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'unit_price' => 'required|numeric|min:0'
+            'product_name'  => 'required|string|max:100',
+            'category'      => 'nullable|string|max:50',
+            'product_image' => 'nullable|image|max:2048',
+            'unit_price'    => 'required|numeric|min:0',
+            'description'   => 'nullable|string|max:500',
+            'stock'         => 'required|integer|min:0',
         ]);
 
         $product = Product::findOrFail($id);
-        
+
         $imagePath = $product->product_image;
-        
-        // Upload gambar baru jika ada
+
         if ($request->hasFile('product_image')) {
-            // Hapus gambar lama jika ada
             if ($product->product_image && file_exists(public_path($product->product_image))) {
                 unlink(public_path($product->product_image));
             }
-            
+
             $image = $request->file('product_image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('product_images'), $imageName);
@@ -82,10 +96,12 @@ class ProductController extends Controller
         }
 
         $product->update([
-            'product_name' => $request->product_name,
-            'category' => $request->category,
+            'product_name'  => $request->product_name,
+            'category'      => $request->category,
+            'unit_price'    => $request->unit_price,
+            'description'   => $request->description,
+            'stock'         => $request->stock,
             'product_image' => $imagePath,
-            'unit_price' => $request->unit_price
         ]);
 
         return redirect()->route('admin.products.index')
@@ -95,15 +111,28 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-        
-        // Hapus gambar jika ada
+
         if ($product->product_image && file_exists(public_path($product->product_image))) {
             unlink(public_path($product->product_image));
         }
-        
+
         $product->delete();
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Produk berhasil dihapus!');
+    }
+
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.show', compact('product'));
+    }
+
+    public function showBanner()
+    {
+        // Ambil produk terbaru
+        $latestProduct = Product::orderBy('created_at', 'desc')->first();
+
+        return view('index.banner', compact('latestProduct'));
     }
 }
