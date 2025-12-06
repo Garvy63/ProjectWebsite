@@ -6,17 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $primaryKey = 'order_id';
+    protected $table = 'orders';
+    protected $primaryKey = 'order_id'; // WAJIB
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
-        'customer_id', 'billing_address_id', 'shipping_address_id',
-        'order_date', 'subtotal', 'shipping_cost', 'total_amount',
-        'status', 'payment_method', 'order_notes', 'terms_accepted'
-    ];
-
+    'user_id','address_id','subtotal','shipping_cost','total','notes','status'
+];
     public function items()
     {
         return $this->hasMany(OrderItem::class, 'order_id');
     }
-}
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
+}

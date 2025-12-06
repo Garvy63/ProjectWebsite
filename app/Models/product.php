@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    // App\Models\Product.php
+    protected $table = 'products';
     protected $primaryKey = 'product_id';
     public $incrementing = true;
     protected $keyType = 'int';
@@ -19,8 +19,6 @@ class Product extends Model
         'category',
         'product_image',
         'unit_price',
-        'description',
-        'stock'
     ];
 
     public $timestamps = false;

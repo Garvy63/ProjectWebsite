@@ -70,7 +70,7 @@ class CartController extends Controller
 
         // Buat order baru
         $order = Order::create([
-            'customer_id' => Auth::id(),
+            'user_id' => Auth::id(),
             'billing_address_id' => 1,
             'shipping_address_id' => 1,
             'order_date' => now(),
@@ -83,11 +83,11 @@ class CartController extends Controller
         ]);
 
         foreach ($products as $product) {
-            $qty = $cart[$product->id]; // gunakan 'id' bukan 'product_id'
+            $qty = $cart[$product->product_id] ?? 0;
             $itemTotal = $product->unit_price * $qty;
 
             OrderItem::create([
-                'order_id' => $order->id, // gunakan 'id' bukan 'order_id'
+                'order_id' => $order->id,
                 'product_id' => $product->id,
                 'quantity' => $qty,
                 'unit_cost' => $product->unit_price,

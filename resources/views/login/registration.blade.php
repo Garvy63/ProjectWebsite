@@ -80,41 +80,103 @@
                             <form class="row login_form" action="{{ route('register') }}" method="POST" id="contactForm"
                                 novalidate="novalidate">
                                 @csrf
+
+                                {{-- Field Nama Depan --}}
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="first_name" name="first_name"
-                                        placeholder="First Name" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'First Name'" value="{{ old('first_name') }}">
+                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror"
+                                        id="first_name" name="first_name" placeholder="First Name"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'"
+                                        value="{{ old('first_name') }}" required>
+                                    @error('first_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
+
+                                {{-- Field Nama Belakang --}}
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="last_name" name="last_name"
-                                        placeholder="Last Name" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Last Name'" value="{{ old('last_name') }}">
+                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror"
+                                        id="last_name" name="last_name" placeholder="Last Name"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'"
+                                        value="{{ old('last_name') }}" required>
+                                    @error('last_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
+
+                                {{-- Field Email (Untuk Login) --}}
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="email" name="email"
-                                        placeholder="Email" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Email'" value="{{ old('email') }}">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" name="email" placeholder="Email" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Email'" value="{{ old('email') }}" required>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
+
+                                {{-- Field Username (Untuk Login/Tampilan) --}}
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="name" name="name"
-                                        placeholder="Username" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Username'" value="{{ old('name') }}">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        id="name" name="name" placeholder="Username" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Username'" value="{{ old('name') }}" required>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
+
+                                {{-- Field Nomor Telepon --}}
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                        placeholder="Phone Number" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Phone Number'" value="{{ old('phone_number') }}">
+                                    <input type="text" class="form-control @error('phone_number') is-invalid @enderror"
+                                        id="phone_number" name="phone_number" placeholder="Phone Number"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'"
+                                        value="{{ old('phone_number') }}">
+                                    @error('phone_number')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
+
+                                {{-- Field Nama Perusahaan --}}
                                 <div class="col-md-12 form-group">
-                                    <input type="text" class="form-control" id="company_name" name="company_name"
-                                        placeholder="Company Name" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Company Name'" value="{{ old('company_name') }}">
+                                    <input type="text" class="form-control @error('company_name') is-invalid @enderror"
+                                        id="company_name" name="company_name" placeholder="Company Name"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Company Name'"
+                                        value="{{ old('company_name') }}">
+                                    @error('company_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
+
+                                {{-- Field Password --}}
                                 <div class="col-md-12 form-group">
-                                    <input type="password" class="form-control" id="password" name="password"
-                                        placeholder="Password" onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Password'">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        id="password" name="password" placeholder="Password"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required>
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
+
+                                {{-- Field Konfirmasi Password --}}
+                                <div class="col-md-12 form-group">
+                                    <input type="password" class="form-control" id="password-confirm"
+                                        name="password_confirmation" placeholder="Confirm Password"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'"
+                                        required>
+                                </div>
+
                                 <div class="col-md-12 form-group">
                                     <button type="submit" value="submit" class="primary-btn">create</button>
                                 </div>

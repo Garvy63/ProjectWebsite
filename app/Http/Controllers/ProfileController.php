@@ -61,12 +61,12 @@ class ProfileController extends Controller
         $user->email      = $validatedUser['email'];
         $user->address_id = $address->id;
 
-        if (isset($validatedUser['password']) && !empty(trim($validatedUser['password']))) {
-            $user->password = Hash::make($validatedUser['password']);
+        if (!empty($validatedUser['password'])) {
+        $user->password = Hash::make($validatedUser['password']);
+            }
 
             $user->save();
 
-            return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
+            return redirect()->route('profile.index')->with('success', 'Profil berhasil diperbarui!');
         }
     }
-}
