@@ -150,7 +150,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="single-product">
                             <!-- Jika product_image kosong, pakai placeholder -->
-                            <img class="img-fluid"
+                            <img class="img-fluid product-image"
                                 src="{{ $product->product_image ? asset($product->product_image) : 'https://via.placeholder.com/400x300/FF6B6B/FFFFFF?text=No+Image' }}"
                                 alt="{{ $product->product_name }}">
 

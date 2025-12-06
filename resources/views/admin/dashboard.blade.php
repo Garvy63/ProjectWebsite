@@ -4,7 +4,7 @@
 
 {{-- ==================== BAGIAN ATAS: 4 KARTU STATISTIK (DIPERBARUI) ==================== --}}
 <div class="row">
-    
+
     {{-- KARTU WELCOME (Besar, Ambil 6 kolom) --}}
     <div class="col-lg-6 mb-4">
         <div class="card overflow-hidden" style="background-color: #f7a240; border-radius: 12px;">
@@ -28,7 +28,7 @@
                 {{-- Bagian Kanan: Gambar --}}
                 <div class="col-sm-6 text-center position-relative">
                     <div class="p-3 pt-4">
-                        <img src="{{ asset('admin_assets/assets/images/welcome/welcome.png') }}" 
+                        <img src="{{ asset('admin_assets/assets/images/welcome/welcome.png') }}"
                              height="130" alt="welcome.png">
                     </div>
                 </div>
@@ -45,18 +45,18 @@
                     <div class="card-body p-3">
                         <div class="d-flex flex-column align-items-start">
                             {{-- Icon Circle --}}
-                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" 
+                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
                                  style="background-color: #84994F; width: 50px; height: 50px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                                 <i class="fas fa-history fs-5 text-white"></i>
                             </div>
-                            
+
                             {{-- Angka & Label --}}
                             <h3 class="mb-1 fs-5 fw-bold text-dark">{{ $formattedSales ?? '0' }}</h3>
                             <p class="mb-1 fs-4 text-secondary">Penjualan</p>
-                            
+
                             {{-- Badge Persentase --}}
                             <div class="d-flex align-items-center mt-2">
-                                <span class="badge rounded-pill bg-success-subtle text-success fw-semibold" 
+                                <span class="badge rounded-pill bg-success-subtle text-success fw-semibold"
                                       style="font-size: 0.75rem;">
                                     {{ $salesGrowth ?? '0%' }}
                                 </span>
@@ -72,18 +72,18 @@
                     <div class="card-body p-3">
                         <div class="d-flex flex-column align-items-start">
                             {{-- Icon Circle --}}
-                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" 
+                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
                                  style="background-color: #FCB53B; width: 50px; height: 50px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                                 <i class="fas fa-redo fs-5 text-white"></i>
                             </div>
-                            
+
                             {{-- Angka & Label --}}
                             <h3 class="mb-1 fs-5 fw-bold text-dark">{{ $formattedRefunds ?? '0' }}</h3>
                             <p class="mb-1 fs-4 text-secondary">Pengembalian</p>
-                            
+
                             {{-- Badge Persentase --}}
                             <div class="d-flex align-items-center mt-2">
-                                <span class="badge rounded-pill bg-danger-subtle text-danger fw-semibold" 
+                                <span class="badge rounded-pill bg-danger-subtle text-danger fw-semibold"
                                       style="font-size: 0.75rem;">
                                     {{ $refundsGrowth ?? '0%' }}
                                 </span>
@@ -99,18 +99,18 @@
                     <div class="card-body p-3">
                         <div class="d-flex flex-column align-items-start">
                             {{-- Icon Circle --}}
-                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" 
+                            <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
                                  style="background-color: #84af6d; width: 50px; height: 50px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                                 <i class="fas fa-dollar-sign fs-5 text-white"></i>
                             </div>
-                            
+
                             {{-- Angka & Label --}}
                             <h3 class="mb-1 fs-5 fw-bold text-dark">{{ $formattedEarnings ?? 'Rp0' }}</h3>
                             <p class="mb-1 fs-4 text-secondary">Pemasukan</p>
-                            
+
                             {{-- Badge Persentase (PROFIT GROWTH MoM) --}}
                             <div class="d-flex align-items-center mt-2">
-                                <span class="badge rounded-pill bg-success-subtle text-success fw-semibold" 
+                                <span class="badge rounded-pill bg-success-subtle text-success fw-semibold"
                                       style="font-size: 0.75rem;">
                                     {{ $earningsGrowth ?? '0%' }}
                                 </span>
@@ -130,26 +130,26 @@
 
     {{-- KOLOM KIRI: Chart dan Laporan --}}
     <div class="col-lg-8">
-        
+
         {{-- Marketing Report Card --}}
         <div class="card mb-4">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="card-title mb-0">Keuntungan Penjualan</h5>
                 </div>
-                
+
                 {{-- Marketing Metrics (Keuntungan Tahunan) --}}
                 <div class="row mb-4">
-                    
+
                     {{-- Slot 1: Keuntungan Tahun Ini (Total Rupiah PROFIT) --}}
                     <div class="col-md-6">
                         <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                            <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-3"
                                  style="width: 40px; height: 40px;">
                                 <i class="fas fa-chart-line text-primary"></i>
                             </div>
                             <div>
-                                <h6 class="mb-0">Keuntungan Tahun Ini</h6> 
+                                <h6 class="mb-0">Keuntungan Tahun Ini</h6>
                                 {{-- Tampilkan Rupiah Total PROFIT TAHUN INI --}}
                                 @php
                                     $profitTY = $marketingData['google_ads'] ?? 0;
@@ -161,16 +161,16 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     {{-- Slot 2: Keuntungan Tahun Lalu (Total Rupiah PROFIT) --}}
                     <div class="col-md-6">
                         <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                            <div class="rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center me-3"
                                  style="width: 40px; height: 40px;">
                                 <i class="fas fa-calendar-alt text-success"></i>
                             </div>
                             <div>
-                                <h6 class="mb-0">Keuntungan Tahun Lalu</h6> 
+                                <h6 class="mb-0">Keuntungan Tahun Lalu</h6>
                                 {{-- Tampilkan Rupiah Total PROFIT TAHUN LALU --}}
                                 @php
                                     $profitLY = $marketingData['referral'] ?? 0;
@@ -182,12 +182,12 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
                 {{-- Chart (Sudah menggunakan data Profit) --}}
                 {{-- Wrapper untuk Scroll Horizontal --}}
-                <div style="overflow-x: auto;"> 
+                <div style="overflow-x: auto;">
                     <div class="chart-container" style="width: 1200px; height: 300px;">
                         <canvas id="marketingChart"></canvas>
                     </div>
@@ -213,7 +213,7 @@
                         <h2 class="fw-bold {{ $color7 }}">{{ $profit7Days >= 0 ? '' : '-' }}Rp{{ number_format(abs($profit7Days)) }}</h2>
                         <div class="progress" style="height: 8px;">
                             @php
-                                $progress = isset($paymentsLast7Days) ? min(($paymentsLast7Days / 20000000) * 100, 100) : 75; 
+                                $progress = isset($paymentsLast7Days) ? min(($paymentsLast7Days / 20000000) * 100, 100) : 75;
                             @endphp
                             <div class="progress-bar bg-success" style="width: {{ $progress }}%"></div>
                         </div>
@@ -227,12 +227,12 @@
 
     {{-- KOLOM KANAN: Sidebar Info --}}
     <div class="col-lg-4">
-        
+
         {{-- Payment Methods Card (FIXED REAL DATA) --}}
         @php
             // Ambil data dari Controller
             $paymentData = $paymentMethodDistribution ?? [];
-            
+
             // Definisikan ikon dan warna untuk metode pembayaran (sesuai data DB kamu)
             $methodIcons = [
                 'PayPal' => ['icon' => 'fab fa-paypal', 'color' => 'primary'],
@@ -240,26 +240,26 @@
                 'Dompet Digital' => ['icon' => 'fas fa-wallet', 'color' => 'warning'],
                 'Cash' => ['icon' => 'fas fa-money-bill', 'color' => 'success'],
             ];
-            
+
             // Ambil top 2 methods untuk display
             $topMethodsToDisplay = array_slice($paymentData, 0, 2);
-            
+
             // Hitung total persentase untuk progress bar
             $totalPrimary = array_sum(array_column($paymentData, 'percentage'));
-            
+
         @endphp
 
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title mb-4">Metode Pembayaran (Top 2)</h5>
-                
+
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     @foreach($topMethodsToDisplay as $i => $method)
                         @php
                             $details = $methodIcons[$method['name']] ?? ['icon' => 'fas fa-question', 'color' => 'secondary'];
                         @endphp
                         <div class="d-flex align-items-center">
-                            <div class="rounded-circle bg-{{ $details['color'] }} bg-opacity-10 d-flex align-items-center justify-content-center me-3" 
+                            <div class="rounded-circle bg-{{ $details['color'] }} bg-opacity-10 d-flex align-items-center justify-content-center me-3"
                                  style="width: 40px; height: 40px;">
                                 <i class="{{ $details['icon'] }} text-{{ $details['color'] }}"></i>
                             </div>
@@ -277,14 +277,14 @@
                         </div>
                     @endif
                 </div>
-                
+
                 {{-- Progress Bar untuk semua metode yang ada --}}
                 <div class="progress" style="height: 10px;">
                     @php
                         $processedWidth = 0;
                     @endphp
                     @foreach($paymentData as $method)
-                        <div class="progress-bar bg-{{ $methodIcons[$method['name']]['color'] ?? 'secondary' }}" 
+                        <div class="progress-bar bg-{{ $methodIcons[$method['name']]['color'] ?? 'secondary' }}"
                              style="width: {{ $method['percentage'] }}%"
                              role="progressbar" aria-valuenow="{{ $method['percentage'] }}" aria-valuemin="0" aria-valuemax="100"></div>
                         @php
@@ -307,7 +307,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title mb-4">Top Performing Products (Laba)</h5>
-                
+
                 <div class="table-responsive">
                     <table class="table table-borderless">
                         <thead>
@@ -333,7 +333,7 @@
                                     $colorProduct = $profitProduct >= 0 ? 'text-success' : 'text-danger';
                                 @endphp
                                 <td class="{{ $colorProduct }} fw-bold">
-                                    {{ $profitProduct >= 0 ? '+' : '' }}Rp{{ number_format($profitProduct) }} 
+                                    {{ $profitProduct >= 0 ? '+' : '' }}Rp{{ number_format($profitProduct) }}
                                 </td>
                             </tr>
                             @endforeach
@@ -347,7 +347,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title mb-4">Laba/Rugi Transaksi Terbaru</h5>
-                
+
                 @foreach($recentTransactions ?? [] as $transaction)
                 <div class="d-flex align-items-center mb-3">
                     @php
@@ -359,8 +359,8 @@
                         if (($transaction['type'] ?? '') == 'Pending') $icon = 'fas fa-clock';
                         if (($transaction['type'] ?? '') == 'Payment') $icon = 'fas fa-money-check-alt';
                     @endphp
-                    
-                    <div class="rounded-circle {{ $bgClass }}-subtle d-flex align-items-center justify-content-center me-3" 
+
+                    <div class="rounded-circle {{ $bgClass }}-subtle d-flex align-items-center justify-content-center me-3"
                          style="width: 50px; height: 50px;">
                         <i class="{{ $icon }} {{ $iconClass }}"></i>
                     </div>
@@ -389,7 +389,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const ctx = document.getElementById('marketingChart').getContext('2d');
-        
+
         // Data dari Controller
         const chartData = @json($chartData);
 
@@ -406,7 +406,7 @@
                         backgroundColor: 'rgba(78, 115, 223, 0.05)',
                         tension: 0.4,
                         yAxisID: 'y'
-                    }, 
+                    },
                     {
                         // Dataset 2: Total Orders (Count)
                         label: chartData.datasets[1].label,
@@ -414,19 +414,19 @@
                         borderColor: '#1cc88a',
                         backgroundColor: 'rgba(28, 200, 138, 0.05)',
                         tension: 0.4,
-                        yAxisID: 'y1' 
+                        yAxisID: 'y1'
                     }
                 ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: true } }, 
+                plugins: { legend: { display: true } },
                 scales: {
                     x: { grid: { display: false } },
                     // Y-Axis Kiri (Untuk Profit)
-                    y: { 
-                        beginAtZero: true, 
+                    y: {
+                        beginAtZero: true,
                         position: 'left',
                         title: {
                             display: true,
@@ -447,13 +447,13 @@
                     // Y-Axis Kanan (Untuk Order Count)
                     y1: {
                         beginAtZero: true,
-                        position: 'right', 
+                        position: 'right',
                         title: {
                             display: true,
                             text: 'Orders (Count)'
                         },
                         grid: {
-                            drawOnChartArea: false 
+                            drawOnChartArea: false
                         }
                     }
                 }

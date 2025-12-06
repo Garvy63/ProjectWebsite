@@ -5808,6 +5808,12 @@ label {
     cursor: pointer;
 }
 
+.product-image {
+    width: 200px;         /* atau sesuai kebutuhan */
+    height: 250px;
+    object-fit: cover;    /* crop gambar agar proporsional */
+    border-radius: 8px;   /* opsional */
+}
 
 
 /*# sourceMappingURL=main.css.map */

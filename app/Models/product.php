@@ -9,8 +9,10 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
+    // App\Models\Product.php
     protected $primaryKey = 'product_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'product_name',

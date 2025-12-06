@@ -5,14 +5,21 @@ use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
-
-
+use App\Http\Controllers\ProfileController;
 
 // <-- Login -->
 
 Route::get('/', [ProductController::class, 'frontendIndex'])->name('home')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
 
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
@@ -24,6 +31,8 @@ Route::post('/cart/update', [CartController::class, 'update'])->name('cart.updat
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::get('/orders/{id}', [CartController::class, 'show'])->name('orders.show');
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 
 
 Route::get('/registration', function () {
@@ -44,7 +53,7 @@ Route::get('/admindashboard', [AdminController::class, 'index'])
     ->middleware('auth')
     ->name('admin');
 
-    Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth'])->group(function () {
     // Product Routes
     Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
@@ -54,8 +63,6 @@ Route::get('/admindashboard', [AdminController::class, 'index'])
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
     // Admin
     Route::prefix('admin')->group(function () {
-    Route::resource('products', App\Http\Controllers\ProductController::class)->names('admin.products');
+        Route::resource('products', App\Http\Controllers\ProductController::class)->names('admin.products');
     });
-
 });
-

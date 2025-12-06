@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // App\Models\User.php
+    public function address()
+    {
+        return $this->belongsTo(Address::class, 'address_id');
+    }
 }

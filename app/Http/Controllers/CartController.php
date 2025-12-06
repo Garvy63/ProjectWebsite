@@ -63,13 +63,14 @@ class CartController extends Controller
             return redirect()->route('cart.index');
         }
 
+        // Ambil produk berdasarkan primary key default 'id'
         $products = Product::whereIn('product_id', array_keys($cart))->get();
 
         $total = 0;
 
         // Buat order baru
         $order = Order::create([
-            'customer_id' => Auth::id(), // pastikan ini sesuai dengan relasi user->customer
+            'customer_id' => Auth::id(),
             'billing_address_id' => 1,
             'shipping_address_id' => 1,
             'order_date' => now(),
@@ -82,12 +83,12 @@ class CartController extends Controller
         ]);
 
         foreach ($products as $product) {
-            $qty = $cart[$product->product_id];
+            $qty = $cart[$product->id]; // gunakan 'id' bukan 'product_id'
             $itemTotal = $product->unit_price * $qty;
 
             OrderItem::create([
-                'order_id' => $order->order_id,
-                'product_id' => $product->product_id,
+                'order_id' => $order->id, // gunakan 'id' bukan 'order_id'
+                'product_id' => $product->id,
                 'quantity' => $qty,
                 'unit_cost' => $product->unit_price,
                 'item_total' => $itemTotal,
@@ -103,8 +104,9 @@ class CartController extends Controller
 
         session()->forget('cart');
 
-        return redirect()->route('orders.show', ['id' => $order->order_id]);
+        return redirect()->route('orders.show', ['id' => $order->id]); // gunakan 'id'
     }
+
     function formatRupiah($value)
     {
         return 'Rp' . number_format($value, 0, ',', '.');
