@@ -21,12 +21,12 @@
                                 <li class="nav-item"><a class="nav-link" href="/category">Shop Category</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/productdetails">Product Details</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/checkout">Product Checkout</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/confirmation">Confirmation</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('checkout.index') }}">Checkout</a></li>
                             </ul>
                         </li>
                         <li class="nav-item submenu dropdown">
-                            <a href="/blog" class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
-                                aria-expanded="false">Blog</a>
+                            <a href="{{ route('orders.index') }}" class="nav-link dropdown-toggle" role="button" aria-haspopup="true"
+                                aria-expanded="false">ORDER</a>
                         <li class="nav-item submenu dropdown">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf

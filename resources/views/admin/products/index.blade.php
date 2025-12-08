@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
+
+@php
+    use Illuminate\Support\Str;
+@endphp
 <style>
 * {
     margin: 0;
@@ -328,7 +332,7 @@
                             </td>
                             <td>
                                 @if($product->description)
-                                    <span class="product-description">{{ Str::limit($product->description, 50) }}</span>
+                                   <span class="product-description">{{ Str::limit($product->description, 50) }}</span>
                                 @else
                                     <span style="color: #999;">Tidak ada deskripsi</span>
                                 @endif

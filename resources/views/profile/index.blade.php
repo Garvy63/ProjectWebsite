@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
+
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,6 +18,7 @@
     <!-- Site Title -->
     <title>Karma Shop</title>
 
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
@@ -30,14 +32,19 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+
 </head>
+
 
 <body>
 
+
     <!-- Start Area -->
+
 
 @include('layouts.header')
 @extends('layouts.app')
+
 
     <section class="banner-area organic-breadcrumb">
         <div class="container">
@@ -53,9 +60,11 @@
         </div>
     </section>
 
+
 @section('content')
 <div class="container mt-4">
     <h1 class="mb-4">Profil Saya</h1>
+
 
     <div class="card">
         <div class="card-body">
@@ -70,11 +79,14 @@
         </div>
     </div>
 
+
     <a href="{{ route('profile.edit') }}" class="btn btn-primary mt-3">Edit Profil</a>
 </div>
 @endsection
 
+
     <!-- End Area -->
+
 
     <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
@@ -89,4 +101,7 @@
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
 
+
 </html>
+
+

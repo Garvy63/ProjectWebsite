@@ -1,11 +1,14 @@
 <?php
 
+
 namespace App\Http\Controllers;
+
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Customer;
+
 
 class RegistrationController extends Controller
 {
@@ -13,6 +16,7 @@ class RegistrationController extends Controller
     {
         return view('login.registration');
     }
+
 
     public function register(Request $request)
     {
@@ -23,12 +27,14 @@ class RegistrationController extends Controller
             'name' => 'required|string|min:3', // Username
             'password' => 'required|string|min:6|confirmed', // Menambahkan 'confirmed' untuk password_confirmation
 
+
             // Validasi untuk tabel customers
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone_number' => 'nullable|string|max:20',
             'company_name' => 'nullable|string|max:255',
         ]);
+
 
         // 2. Membuat record di tabel users
         $user = User::create([
@@ -37,6 +43,7 @@ class RegistrationController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'user', // Mempertahankan field 'role'
         ]);
+
 
         // 3. Membuat record di tabel customers (Menggunakan ID dari user yang baru dibuat)
         Customer::create([
@@ -48,9 +55,13 @@ class RegistrationController extends Controller
             'company_name' => $request->company_name ?? null,
         ]);
 
+
         // Opsional: Langsung login user setelah registrasi (jika ini adalah proses registrasi otentikasi)
         // auth()->login($user);
+
 
         return redirect()->back()->with('success', 'Registrasi berhasil! Silakan login.');
     }
 }
+
+

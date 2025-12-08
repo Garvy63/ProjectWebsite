@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
+
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,6 +18,7 @@
     <!-- Site Title -->
     <title>Karma Shop</title>
 
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
@@ -30,14 +32,19 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+
 </head>
+
 
 <body>
 
+
     <!-- Start Area -->
+
 
     <!--================Registration Box Area =================-->
     @extends('layouts.loginlayouts')
+
 
     @section('content')
         <section class="login_box_area section_gap">
@@ -56,15 +63,18 @@
                         </div>
                     </div>
 
+
                     <!-- Bagian kanan -->
                     <div class="col-lg-6">
                         <div class="login_form_inner">
                             <h3>registration</h3>
 
+
                             {{-- Pesan sukses --}}
                             @if (session('success'))
                                 <div class="alert alert-success">{{ session('success') }}</div>
                             @endif
+
 
                             {{-- Pesan error --}}
                             @if ($errors->any())
@@ -77,9 +87,11 @@
                                 </div>
                             @endif
 
+
                             <form class="row login_form" action="{{ route('register') }}" method="POST" id="contactForm"
                                 novalidate="novalidate">
                                 @csrf
+
 
                                 {{-- Field Nama Depan --}}
                                 <div class="col-md-12 form-group">
@@ -94,6 +106,7 @@
                                     @enderror
                                 </div>
 
+
                                 {{-- Field Nama Belakang --}}
                                 <div class="col-md-12 form-group">
                                     <input type="text" class="form-control @error('last_name') is-invalid @enderror"
@@ -107,6 +120,7 @@
                                     @enderror
                                 </div>
 
+
                                 {{-- Field Email (Untuk Login) --}}
                                 <div class="col-md-12 form-group">
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
@@ -119,6 +133,7 @@
                                     @enderror
                                 </div>
 
+
                                 {{-- Field Username (Untuk Login/Tampilan) --}}
                                 <div class="col-md-12 form-group">
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
@@ -130,6 +145,7 @@
                                         </span>
                                     @enderror
                                 </div>
+
 
                                 {{-- Field Nomor Telepon --}}
                                 <div class="col-md-12 form-group">
@@ -144,6 +160,7 @@
                                     @enderror
                                 </div>
 
+
                                 {{-- Field Nama Perusahaan --}}
                                 <div class="col-md-12 form-group">
                                     <input type="text" class="form-control @error('company_name') is-invalid @enderror"
@@ -157,6 +174,7 @@
                                     @enderror
                                 </div>
 
+
                                 {{-- Field Password --}}
                                 <div class="col-md-12 form-group">
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -169,6 +187,7 @@
                                     @enderror
                                 </div>
 
+
                                 {{-- Field Konfirmasi Password --}}
                                 <div class="col-md-12 form-group">
                                     <input type="password" class="form-control" id="password-confirm"
@@ -176,6 +195,7 @@
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'"
                                         required>
                                 </div>
+
 
                                 <div class="col-md-12 form-group">
                                     <button type="submit" value="submit" class="primary-btn">create</button>
@@ -188,7 +208,9 @@
         </section>
     @endsection
 
+
     <!--================End Registration Box Area =================-->
+
 
     <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
@@ -202,5 +224,6 @@
     <script src="{{ asset('js/gmaps.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
+
 
 </html>

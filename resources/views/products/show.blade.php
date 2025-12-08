@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
+
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,6 +18,7 @@
     <!-- Site Title -->
     <title>Karma Shop</title>
 
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
@@ -30,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
+
 
 <body>
     @include('layouts.header')
@@ -73,30 +76,51 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <span>Availability</span> : {{ $product->stock ?? 'In Stock' }}
+                                    <span>Availability</span> : {{ $product->stock ?? 0 }} {{ $product->stock > 0 ? 'In Stock' : 'Out of Stock' }}
                                 </a>
                             </li>
                         </ul>
-                        <p>{{ $product->description ?? 'Tidak ada deskripsi untuk produk ini.' }}</p>
+                       
+                        <!-- Deskripsi Produk -->
+                        <div class="mt-3">
+                            <h4>Deskripsi Produk</h4>
+                            <p class="text-justify">
+                                @if($product->description)
+                                    {{ $product->description }}
+                                @else
+                                    <span class="text-muted">Tidak ada deskripsi untuk produk ini.</span>
+                                @endif
+                            </p>
+                        </div>
+
 
                         <div class="card_area d-flex flex-column align-items-start">
                             <form action="{{ route('cart.add') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->product_id }}">
 
+
                                 <!-- Quantity control -->
                                 <div class="product_count d-inline-flex align-items-center">
+                                    <label class="mr-2">Quantity:</label>
                                     <input class="input-number text-center mx-2" type="number" name="quantity"
-                                        value="1" min="1" max="{{ $product->stock ?? 100 }}"
-                                        style="width: 70px;">
+                                        value="1" min="1" max="{{ $product->stock ?? 0 }}"
+                                        style="width: 70px;"
+                                        {{ ($product->stock ?? 0) <= 0 ? 'disabled' : '' }}>
                                 </div>
+
 
                                 <!-- Add to Cart button -->
                                 <div class="mt-3">
+                                    @if(($product->stock ?? 0) > 0)
                                     <button type="submit" class="btn primary-btn">Add to Cart</button>
+                                    @else
+                                        <button type="button" class="btn btn-secondary" disabled>Out of Stock</button>
+                                    @endif
                                 </div>
                             </form>
                         </div>
+
 
                         <div class="mt-3">
                             <a class="btn btn-secondary" href="{{ route('home') }}">
@@ -109,6 +133,7 @@
         </div>
     </div>
     <!--================End Single Product Area =================-->
+
 
     <!-- start footer Area -->
     <footer class="footer-area section_gap mt-5">
@@ -130,15 +155,20 @@
                         <p>Stay update with our latest</p>
                         <div class="" id="mc_embed_signup">
 
+
                             <form target="_blank" novalidate="true"
                                 action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                                 method="get" class="form-inline">
 
+
                                 <div class="d-flex flex-row">
+
 
                                     <input class="form-control" name="EMAIL" placeholder="Enter Email"
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
                                         required="" type="email">
+
+
 
 
                                     <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right"
@@ -147,6 +177,7 @@
                                         <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1"
                                             value="" type="text">
                                     </div>
+
 
                                     <!-- <div class="col-lg-4 col-md-4">
             <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
@@ -189,6 +220,7 @@
     </footer>
     <!-- End footer Area -->
 
+
     <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.ajaxchimp.min.js') }}"></script>
@@ -198,6 +230,7 @@
     <script src="{{ asset('js/countdown.js') }}"></script>
     <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+
 
     <script>
         function incrementQty(el) {
@@ -209,6 +242,7 @@
             }
         }
 
+
         function decrementQty(el) {
             const input = el.parentElement.querySelector('.input-number');
             let value = parseInt(input.value) || 1;
@@ -219,6 +253,8 @@
         }
     </script>
 
+
 </body>
+
 
 </html>

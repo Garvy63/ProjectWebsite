@@ -2,30 +2,40 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $table = 'orders';
-    protected $primaryKey = 'order_id'; // WAJIB
-    public $incrementing = true;
-    protected $keyType = 'int';
+    use HasFactory;
 
+    // TAMBAHKAN INI - Karena primary key adalah order_id, bukan id
+    protected $primaryKey = 'order_id';
+    
     protected $fillable = [
-    'user_id','address_id','subtotal','shipping_cost','total','notes','status'
-];
+        'user_id',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+        'shipping_address',
+        'city',
+        'postcode',
+        'country',
+        'payment_method',
+        'payment_status',
+        'subtotal',
+        'shipping_cost',
+        'total',
+    ];
+
     public function items()
     {
-        return $this->hasMany(OrderItem::class, 'order_id');
+        return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function address()
-    {
-        return $this->belongsTo(Address::class);
     }
 }

@@ -1,19 +1,32 @@
 <?php
 
+
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
+
 
 class Address extends Model
 {
     protected $fillable = [
-    'first_name','last_name','company','phone','email',
-    'address_line_01','address_line_02','town_city',
-    'district','country','postcode_zip'
-];
+        'first_name',
+        'last_name',
+        'company',
+        'phone',
+        'email',
+        'address_line_01',  // Gunakan address_line_01 (tanpa 's') sesuai database
+        'address_line_02',  // Gunakan address_line_02 (tanpa 's') sesuai database
+        'town_city',
+        'district',
+        'country',
+        'postcode_zip'
+    ];
+
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+
 
     public function user()
     {

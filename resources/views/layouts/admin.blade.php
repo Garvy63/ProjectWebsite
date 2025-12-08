@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,9 +9,11 @@
     <link rel="stylesheet" href="{{ asset('admin_assets/assets/css/styles.min.css') }}" />
 </head>
 
+
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
+
 
         <aside class="left-sidebar">
             <div>
@@ -21,6 +24,7 @@
                             <span class="hide-menu">Home</span>
                         </li>
 
+
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{{ route('admin') }}" aria-expanded="false">
                                 <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
@@ -28,10 +32,12 @@
                             </a>
                         </li>
 
+
                         <li class="nav-small-cap">
                             <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
                             <span class="hide-menu">Manajemen Toko</span>
                         </li>
+
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/products" aria-expanded="false">
@@ -39,8 +45,8 @@
                                 <span class="hide-menu">Kelola Produk</span>
                             </a>
                         </li>
-                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/admin/orders" aria-expanded="false">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('admin.orders.index') }}" aria-expanded="false">
                                 <iconify-icon icon="solar:bill-list-line-duotone"></iconify-icon>
                                 <span class="hide-menu">Kelola Pesanan</span>
                             </a>
@@ -59,11 +65,13 @@
                             </a>
                         </li>
 
+
                         </ul>
                     </nav>
                 </div>
             </aside>
         <div class="body-wrapper">
+
 
             <header class="app-header">
                 <nav class="navbar navbar-expand-lg navbar-light">
@@ -74,6 +82,7 @@
                             </a>
                         </li>
                     </ul>
+
 
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
@@ -99,7 +108,9 @@
             <div class="body-wrapper-inner">
                 <div class="container-fluid">
 
+
                     @yield('content')
+
 
                     <div class="py-6 px-6 text-center">
                         <p class="mb-0 fs-4">Design and Developed by <a href="https://www.wrappixel.com/" target="_blank"
@@ -110,9 +121,11 @@
             </div>
     </div>
 
+
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
+
 
     <script src="{{ asset('admin_assets/assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('admin_assets/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
@@ -123,5 +136,6 @@
     <script src="{{ asset('admin_assets/assets/js/dashboard.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
+
 
 </html>

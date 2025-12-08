@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
-<head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="CodePixar">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>Karma Shop</title>
 
-	<!-- CSS -->
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
@@ -30,14 +32,19 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+
 </head>
+
 
 <body>
 
+
 <!-- Start Area -->
 
-	<!--================Login Box Area =================-->
+
+    <!--================Login Box Area =================-->
 @extends('layouts.loginlayouts')
+
 
 @section('content')
 <section class="login_box_area section_gap">
@@ -55,9 +62,11 @@
                 </div>
             </div>
 
+
             <div class="col-lg-6">
                 <div class="login_form_inner">
                     <h3>Log in to enter</h3>
+
 
                     {{-- Tampilkan Pesan Error (jika ada) --}}
                     @if ($errors->any())
@@ -70,9 +79,11 @@
                         </div>
                     @endif
 
+
                     {{-- Arahkan ke route login Laravel --}}
                     <form class="row login_form" action="{{ route('login') }}" method="POST" id="loginForm">
                         @csrf
+
 
                         {{-- Input Email/Username --}}
                         <div class="col-md-12 form-group">
@@ -80,11 +91,13 @@
                             <input type="text" class="form-control" id="email" name="email" placeholder="Email/Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email/Username'" value="{{ old('email') }}">
                         </div>
 
+
                         {{-- Input Password --}}
                         <div class="col-md-12 form-group">
                             {{-- Ganti type="text" menjadi type="password" --}}
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
                         </div>
+
 
                         {{-- Tombol Login dan Lupa Password --}}
                         <div class="col-md-12 form-group">
@@ -100,7 +113,9 @@
 </section>
 @endsection
 
-	<!-- End Area -->
+
+    <!-- End Area -->
+
 
     <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
@@ -114,5 +129,6 @@
     <script src="{{ asset('js/gmaps.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
+
 
 </html>

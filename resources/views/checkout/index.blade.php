@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
-<head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="CodePixar">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>Karma Shop</title>
 
-	<!-- CSS -->
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="CodePixar">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Karma Shop</title>
+
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/themify-icons.css') }}">
@@ -30,13 +32,18 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+
 </head>
+
 
 <body>
 
+
 <!-- Start Area -->
 
+
  @include('layouts.header')
+
 
  <section class="banner-area organic-breadcrumb">
         <div class="container">
@@ -45,131 +52,232 @@
                     <h1>Checkout</h1>
                     <nav class="d-flex align-items-center">
                         <a href="/dashboard">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="/single-product">Checkout</a>
+                        <a href="/single-product">{{'checkout.index'}}</a>
                     </nav>
                 </div>
             </div>
         </div>
     </section>
 
+
     <!--================Checkout Area =================-->
     <section class="checkout_area section_gap">
         <div class="container">
-            <div class="billing_details">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <h3>Billing Details</h3>
-                        <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-                            <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="first" name="name">
-                                <span class="placeholder" data-placeholder="First name"></span>
-                            </div>
-                            <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="last" name="name">
-                                <span class="placeholder" data-placeholder="Last name"></span>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="company" name="company" placeholder="Company name">
-                            </div>
-                            <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="number" name="number">
-                                <span class="placeholder" data-placeholder="Phone number"></span>
-                            </div>
-                            <div class="col-md-6 form-group p_star">
-                                <input type="text" class="form-control" id="email" name="compemailany">
-                                <span class="placeholder" data-placeholder="Email Address"></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <select class="country_select">
-                                    <option value="1">Country</option>
-                                    <option value="2">Country</option>
-                                    <option value="4">Country</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="add1" name="add1">
-                                <span class="placeholder" data-placeholder="Address line 01"></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="add2" name="add2">
-                                <span class="placeholder" data-placeholder="Address line 02"></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <input type="text" class="form-control" id="city" name="city">
-                                <span class="placeholder" data-placeholder="Town/City"></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <select class="country_select">
-                                    <option value="1">District</option>
-                                    <option value="2">District</option>
-                                    <option value="4">District</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP">
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <div class="creat_account">
-                                    <input type="checkbox" id="f-option2" name="selector">
-                                    <label for="f-option2">Create an account?</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <div class="creat_account">
-                                    <h3>Shipping Details</h3>
-                                    <input type="checkbox" id="f-option3" name="selector">
-                                    <label for="f-option3">Ship to a different address?</label>
-                                </div>
-                                <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
-                            </div>
-                        </form>
-                    </div>
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+           
+            <div class="col-lg-8">
+    <h3>Billing Details
+    <small class="ml-2">
+        <a href="{{ route('profile.edit') }}" class="primary-btn-sm" style="font-size: 10px; padding: 4px 8px;">Edit Profil</a>
+    </small>
+</h3>
+
+
+<div class="row contact_form">
+    <div class="col-md-6 form-group">
+        <label>First name</label>
+        <p class="form-control-static"><strong>
+            @php
+                // Coba ambil dari customer, jika tidak ada split dari user->name
+                $firstName = $user->customer?->first_name;
+                if (empty($firstName) && !empty($user->name)) {
+                    $nameParts = explode(' ', $user->name, 2);
+                    $firstName = $nameParts[0] ?? $user->name;
+                }
+            @endphp
+            {{ $firstName ?? 'N/A' }}
+        </strong></p>
+    </div>
+    <div class="col-md-6 form-group">
+        <label>Last name</label>
+        <p class="form-control-static"><strong>
+            @php
+                // Coba ambil dari customer, jika tidak ada ambil bagian kedua dari user->name
+                $lastName = $user->customer?->last_name;
+                if (empty($lastName) && !empty($user->name)) {
+                    $nameParts = explode(' ', trim($user->name), 2);
+                    $lastName = $nameParts[1] ?? '';
+                }
+                // Jika masih kosong, gunakan "-" atau kosong saja
+                if (empty($lastName)) {
+                    $lastName = '-';
+                }
+            @endphp
+            {{ $lastName }}
+        </strong></p>
+    </div>
+    <div class="col-md-12 form-group">
+        <label>Email Address</label>
+        <p class="form-control-static"><strong>{{ $user->email ?? 'N/A' }}</strong></p>
+    </div>
+    <div class="col-md-6 form-group">
+        <label>Phone number</label>
+        <p class="form-control-static"><strong>
+            @php
+                // Coba ambil dari customer->phone_number
+                $phoneNumber = $user->customer?->phone_number;
+                // Jika tidak ada, coba dari address (jika ada kolom phone)
+                if (empty($phoneNumber) && isset($user->address)) {
+                    $phoneNumber = $user->address->phone ?? null;
+                }
+                // Jika masih kosong, tampilkan placeholder
+                if (empty($phoneNumber)) {
+                    $phoneNumber = '-';
+                }
+            @endphp
+            {{ $phoneNumber }}
+        </strong></p>
+    </div>
+    <div class="col-md-6 form-group">
+        <label>Country</label>
+        <p class="form-control-static"><strong>{{ $user->address?->country ?? 'Indonesia' }}</strong></p>
+    </div>
+    <div class="col-md-12 form-group">
+        <label>Shipping Address</label>
+        <p class="form-control-static"><strong>
+            @php
+                // Gunakan address_line_01 (tanpa 's') sesuai database
+                $shippingAddress = $user->address?->address_line_01 ?? $user->customer?->shipping_address ?? null;
+                if (empty($shippingAddress)) {
+                    $shippingAddress = 'Alamat belum diisi';
+                }
+            @endphp
+            {{ $shippingAddress }}
+        </strong></p>
+    </div>
+    <div class="col-md-6 form-group">
+        <label>Town/City</label>
+        <p class="form-control-static"><strong>{{ $user->address?->town_city ?? 'N/A' }}</strong></p>
+    </div>
+    <div class="col-md-6 form-group">
+        <label>Postcode/ZIP</label>
+        <p class="form-control-static"><strong>{{ $user->address?->postcode_zip ?? 'N/A' }}</strong></p>
+    </div>
+</div>
+
+
+<form class="row contact_form" action="{{ route('checkout.store') }}" method="post" id="checkout-form">
+    @csrf
+   
+    @php
+        // Helper untuk mendapatkan first_name
+        $firstName = $user->customer?->first_name;
+        if (empty($firstName) && !empty($user->name)) {
+            $nameParts = explode(' ', trim($user->name), 2);
+            $firstName = $nameParts[0] ?? $user->name;
+        }
+       
+        // Helper untuk mendapatkan last_name
+        $lastName = $user->customer?->last_name;
+        if (empty($lastName) && !empty($user->name)) {
+            $nameParts = explode(' ', trim($user->name), 2);
+            $lastName = $nameParts[1] ?? '';
+        }
+       
+        // Helper untuk phone_number
+        $phoneNumber = $user->customer?->phone_number ?? '';
+       
+        // Helper untuk shipping_address - Gunakan address_line_01 (tanpa 's') sesuai database
+        $shippingAddress = $user->address?->address_line_01 ?? $user->customer?->shipping_address ?? '';
+    @endphp
+   
+    <input type="hidden" name="first_name" value="{{ $firstName ?? '' }}">
+    <input type="hidden" name="last_name" value="{{ $lastName ?? '' }}">
+    <input type="hidden" name="email" value="{{ $user->email ?? '' }}">
+    <input type="hidden" name="phone" value="{{ $phoneNumber }}">
+    <input type="hidden" name="shipping_address" value="{{ $shippingAddress }}">
+    <input type="hidden" name="city" value="{{ $user->address?->town_city ?? '' }}">
+    <input type="hidden" name="postcode" value="{{ $user->address?->postcode_zip ?? '' }}">
+    <input type="hidden" name="country" value="{{ $user->address?->country ?? 'Indonesia' }}">
+   
+    <div class="col-md-12 form-group">
+        <textarea class="form-control" name="notes" id="notes" rows="3" placeholder="Order Notes (Optional)"></textarea>
+    </div>
+       
+        </form>
+</div>
                     <div class="col-lg-4">
-                        <div class="order_box">
-                            <h2>Your Order</h2>
-                            <ul class="list">
-                                <li><a href="#">Product <span>Total</span></a></li>
-                                <li><a href="#">Fresh Blackberry <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                                <li><a href="#">Fresh Tomatoes <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                                <li><a href="#">Fresh Brocoli <span class="middle">x 02</span> <span class="last">$720.00</span></a></li>
-                            </ul>
-                            <ul class="list list_2">
-                                <li><a href="#">Subtotal <span>$2160.00</span></a></li>
-                                <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
-                                <li><a href="#">Total <span>$2210.00</span></a></li>
-                            </ul>
-                            <div class="payment_item">
-                                <div class="radion_btn">
-                                    <input type="radio" id="f-option5" name="selector">
-                                    <label for="f-option5">Check payments</label>
-                                    <div class="check"></div>
-                                </div>
-                                <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
-                                    Store Postcode.</p>
-                            </div>
-                            <div class="payment_item active">
-                                <div class="radion_btn">
-                                    <input type="radio" id="f-option6" name="selector">
-                                    <label for="f-option6">Paypal </label>
-                                    <img src="img/product/card.jpg" alt="">
-                                    <div class="check"></div>
-                                </div>
-                                <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
-                                    account.</p>
-                            </div>
-                            <div class="creat_account">
-                                <input type="checkbox" id="f-option4" name="selector">
-                                <label for="f-option4">I’ve read and accept the </label>
-                                <a href="#">terms & conditions*</a>
-                            </div>
-                            <a class="primary-btn" href="#">Proceed to Paypal</a>
-                        </div>
+    <div class="order_box">
+        <h2>Your Order</h2>
+        <ul class="list">
+            <li><a href="#">Product <span>Total</span></a></li>
+           
+            @forelse ($items as $item)
+            <li>
+                <a href="#">
+                    {{ $item['product']->product_name ?? 'Product' }}
+                    <span class="middle">x {{ $item['quantity'] }}</span>
+                    <span class="last">{{ 'Rp' . number_format($item['item_total'], 0, ',', '.') }}</span>
+                </a>
+            </li>
+            @empty
+            <li><a href="#">Keranjang <span>Kosong</span></a></li>
+            <li class="text-center mt-3">
+                <a href="{{ route('home') }}" class="btn btn-sm btn-primary">Kembali Belanja</a>
+            </li>
+            @endforelse
+
+
+        </ul>
+        <ul class="list list_2">
+            <li><a href="#">Subtotal <span>{{ 'Rp' . number_format($subtotal, 0, ',', '.') }}</span></a></li>
+            <li><a href="#">Shipping <span>Flat rate: {{ 'Rp' . number_format($shipping, 0, ',', '.') }}</span></a></li>
+            <li><a href="#">Total <span>{{ 'Rp' . number_format($total, 0, ',', '.') }}</span></a></li>
+        </ul>
+
+
+        @if(count($items) > 0)
+        <div class="payment_item">
+            <div class="radion_btn">
+                <input type="radio" id="f-option5" name="payment_method" value="check_payment" form="checkout-form">
+                <label for="f-option5">Check payments</label>
+                <div class="check"></div>
+            </div>
+            <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
+                Store Postcode.</p>
+        </div>
+       
+        <div class="payment_item active">
+            <div class="radion_btn">
+                <input type="radio" id="f-option6" name="payment_method" value="paypal" checked form="checkout-form">
+                <label for="f-option6">Paypal </label>
+                <img src="{{ asset('img/product/card.jpg') }}" alt="">
+                <div class="check"></div>
+            </div>
+            <p>Pay via PayPal; you can pay with your credit card if you don't have a PayPal
+                account.</p>
+        </div>
+       
+        <div class="creat_account">
+            <input type="checkbox" id="f-option4" name="terms" form="checkout-form" required>
+            <label for="f-option4">I've read and accept the </label>
+            <a href="#">terms & conditions*</a>
+        </div>
+       
+        <button type="submit" form="checkout-form" class="primary-btn">Proceed to Paypal</button>
+        @else
+        <div class="alert alert-warning">
+            <p>Keranjang Anda kosong. Silakan tambahkan produk terlebih dahulu.</p>
+            <a href="{{ route('home') }}" class="btn btn-primary">Kembali Belanja</a>
+        </div>
+        @endif
+       
+    </div>
+</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!--================End Checkout Area =================-->
+
 
     <!-- start footer Area -->
     <footer class="footer-area section_gap">
@@ -191,13 +299,18 @@
                         <p>Stay update with our latest</p>
                         <div class="" id="mc_embed_signup">
 
+
                             <form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                                 method="get" class="form-inline">
 
+
                                 <div class="d-flex flex-row">
+
 
                                     <input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = 'Enter Email '" required="" type="email">
+
+
 
 
                                     <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right"
@@ -207,9 +320,10 @@
                                             type="text">
                                     </div>
 
+
                                     <!-- <div class="col-lg-4 col-md-4">
-													<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-												</div>  -->
+                                                    <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
+                                                </div>  -->
                                 </div>
                                 <div class="info"></div>
                             </form>
@@ -254,7 +368,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </footer>
     <!-- End footer Area -->
 
+
 <!-- End Area -->
+
 
     <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
@@ -268,5 +384,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="{{ asset('js/gmaps.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
+
 
 </html>

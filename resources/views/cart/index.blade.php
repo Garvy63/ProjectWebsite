@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
+
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,6 +18,7 @@
     <!-- Site Title -->
     <title>Karma Shop</title>
 
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
@@ -30,11 +32,15 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+
 </head>
+
 
 <body>
 
+
     <!-- Start Area -->
+
 
     @include('layouts.header')
     <section class="banner-area organic-breadcrumb">
@@ -50,6 +56,7 @@
             </div>
         </div>
     </section>
+
 
     <section class="cart_area">
         <div class="container">
@@ -89,10 +96,12 @@
                                                 <i class="lnr lnr-chevron-up"></i>
                                             </button>
 
+
                                             <input type="number" value="{{ $item['quantity'] }}" min="0"
                                                 class="input-text qty mx-2 text-center" style="width: 60px;"
                                                 data-product="{{ $item['product']->product_id }}"
                                                 data-price="{{ $item['unit_cost'] }}" />
+
 
                                             <button type="button" class="reduced items-count"
                                                 onclick="changeQty(this, -1)">
@@ -112,6 +121,7 @@
                                 </tr>
                             @endforelse
 
+
                             <tr>
                                 <td colspan="2"></td>
                                 <td>
@@ -121,6 +131,7 @@
                                     <h5 id="subtotal">Rp{{ number_format($subtotal, 0, ',', '.') }}</h5>
                                 </td>
                             </tr>
+
 
                             <tr class="shipping_area">
                                 <td colspan="2"></td>
@@ -138,6 +149,7 @@
                                                     Rp2.000</a></li>
                                         </ul>
 
+
                                         <div class="mt-3">
                                             <h6>Calculate Shipping <i class="fa fa-caret-down"></i></h6>
                                             <h5 id="shipping-cost" class="mb-2">Rp0</h5>
@@ -149,15 +161,13 @@
                                 </td>
                             </tr>
 
+
                             <tr class="out_button_area">
                                 <td colspan="4">
                                     <div class="checkout_btn_inner d-flex justify-content-end align-items-center">
                                         <a class="gray_btn mr-2" href="{{ route('home') }}">Continue
                                             Shopping</a>
-                                        <form action="{{ route('cart.checkout') }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="primary-btn">Proceed to checkout</button>
-                                        </form>
+                                        <a href="{{ route('checkout.index') }}" class="primary-btn">Proceed to checkout</a>
                                     </div>
                                 </td>
                             </tr>
@@ -168,9 +178,12 @@
         </div>
     </section>
 
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
     <!--================End Cart Area =================-->
+
 
     <!-- start footer Area -->
     <footer class="footer-area section_gap">
@@ -192,15 +205,20 @@
                         <p>Stay update with our latest</p>
                         <div class="" id="mc_embed_signup">
 
+
                             <form target="_blank" novalidate="true"
                                 action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                                 method="get" class="form-inline">
 
+
                                 <div class="d-flex flex-row">
+
 
                                     <input class="form-control" name="EMAIL" placeholder="Enter Email"
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
                                         required="" type="email">
+
+
 
 
                                     <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right"
@@ -209,6 +227,7 @@
                                         <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1"
                                             value="" type="text">
                                     </div>
+
 
                                     <!-- <div class="col-lg-4 col-md-4">
              <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
@@ -262,7 +281,9 @@
     </footer>
     <!-- End footer Area -->
 
+
     <!-- End Area -->
+
 
     <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
@@ -276,6 +297,7 @@
     <script src="{{ asset('js/gmaps.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 
+
     <script>
         function changeQty(button, delta) {
             const input = button.parentElement.querySelector('.qty');
@@ -284,9 +306,11 @@
             if (value < 0) value = 0;
             input.value = value;
 
+
             updateCart(input.dataset.product, value);
             updateTotals();
         }
+
 
         function updateCart(productId, quantity) {
             fetch("{{ route('cart.update') }}", {
@@ -311,6 +335,7 @@
                 .catch(err => console.error("Cart update error:", err));
         }
 
+
         function updateTotals() {
             let subtotal = 0;
             document.querySelectorAll('.qty').forEach(input => {
@@ -319,6 +344,7 @@
                 const row = input.closest('tr');
                 const totalCell = row.querySelector('.item-total');
 
+
                 if (quantity > 0) {
                     const total = price * quantity;
                     totalCell.textContent = "Rp" + total.toLocaleString('id-ID');
@@ -326,19 +352,24 @@
                 }
             });
 
+
             document.querySelector('#subtotal').textContent = "Rp" + subtotal.toLocaleString('id-ID');
+
 
             const shippingCost = parseInt(document.getElementById('shipping-cost').textContent.replace(/\D/g, '')) || 0;
             document.getElementById('grand-total').textContent = "Rp" + (subtotal + shippingCost).toLocaleString('id-ID');
         }
 
+
         // shipping option click
         document.addEventListener('DOMContentLoaded', function() {
             updateTotals();
 
+
             const shippingOptions = document.querySelectorAll('.shipping-options li a');
             const shippingCostCell = document.getElementById('shipping-cost');
             const grandTotalCell = document.getElementById('grand-total');
+
 
             shippingOptions.forEach(option => {
                 option.addEventListener('click', function(e) {
@@ -346,10 +377,12 @@
                     const cost = parseInt(this.dataset.cost);
                     shippingCostCell.textContent = "Rp" + cost.toLocaleString('id-ID');
 
+
                     let subtotal = parseInt(document.querySelector('#subtotal').textContent.replace(
                         /\D/g, '')) || 0;
                     const grandTotal = subtotal + cost;
                     grandTotalCell.textContent = "Rp" + grandTotal.toLocaleString('id-ID');
+
 
                     shippingOptions.forEach(o => o.parentElement.classList.remove('active'));
                     this.parentElement.classList.add('active');
@@ -358,6 +391,8 @@
         });
     </script>
 
+
 </body>
+
 
 </html>

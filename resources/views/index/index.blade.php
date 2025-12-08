@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
+
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,6 +18,7 @@
     <!-- Site Title -->
     <title>Karma Shop</title>
 
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
@@ -30,13 +32,18 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+
 </head>
+
 
 <body>
 
+
     <!-- Start Area -->
 
+
     @include('layouts.header')
+
 
     <!-- start banner Area -->
     <section class="banner-area">
@@ -82,6 +89,8 @@
         </div>
     </section>
     <!-- End banner Area -->
+
+
 
 
     <!-- start features Area -->
@@ -133,6 +142,7 @@
     </section>
     <!-- end features Area -->
 
+
     <!-- start product Area -->
     <section class="section_gap">
         <div class="container">
@@ -145,6 +155,7 @@
                 </div>
             </div>
 
+
             <div class="row justify-content-center">
                 @foreach ($products as $product)
                     <div class="col-lg-4 col-md-6">
@@ -153,6 +164,7 @@
                             <img class="img-fluid product-image"
                                 src="{{ $product->product_image ? asset($product->product_image) : 'https://via.placeholder.com/400x300/FF6B6B/FFFFFF?text=No+Image' }}"
                                 alt="{{ $product->product_name }}">
+
 
                             <div class="product-details">
                                 <h6>{{ $product->product_name }}</h6>
@@ -167,17 +179,20 @@
                                         <p class="hover-text">add to bag</p>
                                     </a>
 
+
                                     <!-- Wishlist -->
                                     <a href="#" class="social-info">
                                         <span class="lnr lnr-heart"></span>
                                         <p class="hover-text">wishlist</p>
                                     </a>
 
+
                                     <!-- Compare -->
                                     <a href="#" class="social-info">
                                         <span class="lnr lnr-sync"></span>
                                         <p class="hover-text">compare</p>
                                     </a>
+
 
                                     <!-- View More -->
                                     <a href="{{ route('products.show', $product->product_id) }}" class="social-info">
@@ -191,6 +206,7 @@
                 @endforeach
             </div>
 
+
             <!-- Tambahkan pagination -->
             <div class="d-flex justify-content-center mt-4">
                 {{ $products->links() }}
@@ -199,6 +215,7 @@
         </div>
     </section>
     <!-- end product Area -->
+
 
     <!-- Start exclusive deal Area -->
     <section class="exclusive-deal-area">
@@ -274,6 +291,7 @@
     </section>
     <!-- End exclusive deal Area -->
 
+
     <!-- start footer Area -->
     <footer class="footer-area section_gap">
         <div class="container">
@@ -294,15 +312,20 @@
                         <p>Stay update with our latest</p>
                         <div class="" id="mc_embed_signup">
 
+
                             <form target="_blank" novalidate="true"
                                 action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                                 method="get" class="form-inline">
 
+
                                 <div class="d-flex flex-row">
+
 
                                     <input class="form-control" name="EMAIL" placeholder="Enter Email"
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
                                         required="" type="email">
+
+
 
 
                                     <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right"
@@ -311,6 +334,7 @@
                                         <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1"
                                             value="" type="text">
                                     </div>
+
 
                                     <!-- <div class="col-lg-4 col-md-4">
             <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
@@ -364,7 +388,9 @@
     </footer>
     <!-- End footer Area -->
 
+
     <!-- End Area -->
+
 
     <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
@@ -378,5 +404,6 @@
     <script src="{{ asset('js/gmaps.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
+
 
 </html>

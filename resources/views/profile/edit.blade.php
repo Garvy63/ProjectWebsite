@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
+
 <head>
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,6 +18,7 @@
     <!-- Site Title -->
     <title>Karma Shop</title>
 
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
@@ -30,9 +32,12 @@
     <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+
 </head>
 
+
 <body>
+
 
     @include('layouts.header')
     <section class="banner-area organic-breadcrumb">
@@ -49,6 +54,7 @@
         </div>
     </section>
 
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -57,10 +63,12 @@
                         <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Edit Profil</h4>
                     </div>
 
+
                     <div class="card-body">
                         <form method="POST" action="{{ route('profile.update') }}">
                             @csrf
                             @method('PUT')
+
 
                             {{-- Data User --}}
                             <div class="mb-3">
@@ -69,11 +77,13 @@
                                     value="{{ old('name', $user->name) }}">
                             </div>
 
+
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
                                 <input type="email" name="email" class="form-control"
                                     value="{{ old('email', $user->email) }}">
                             </div>
+
 
                             <div class="mb-3">
                                 <label class="form-label">Password Baru</label>
@@ -81,28 +91,42 @@
                                 <small class="text-muted">Kosongkan jika tidak ingin mengganti password</small>
                             </div>
 
+
                             <!-- TAMBAHKAN INPUT KONFIRMASI PASSWORD -->
                             <div class="mb-3">
                                 <label class="form-label">Konfirmasi Password Baru</label>
                                 <input type="password" name="password_confirmation" class="form-control">
                             </div>
 
+
+                            <div class="mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="text" name="phone_number" class="form-control"
+                                    value="{{ old('phone_number', $user->customer?->phone_number ?? '') }}">
+                                <small class="text-muted">Nomor telepon untuk keperluan checkout</small>
+                            </div>
+
+
                             <hr class="my-4">
+
 
                             {{-- Data Alamat --}}
                             <h5 class="mb-3"><i class="bi bi-geo-alt me-2"></i>Alamat</h5>
 
+
                             <div class="mb-3">
                                 <label class="form-label">Alamat 1</label>
-                                <input type="text" name="address_line_01"
+                                <input type="text" name="address_line_01" class="form-control"
                                     value="{{ old('address_line_01', $user->address->address_line_01 ?? '') }}">
                             </div>
 
+
                             <div class="mb-3">
                                 <label class="form-label">Alamat 2</label>
-                                <input type="text" name="address_line_02"
+                                <input type="text" name="address_line_02" class="form-control"
                                     value="{{ old('address_line_02', $user->address->address_line_02 ?? '') }}">
                             </div>
+
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -119,6 +143,7 @@
                                 </div>
                             </div>
 
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Negara</label>
@@ -134,6 +159,7 @@
                                 </div>
                             </div>
 
+
                             <div class="d-flex justify-content-between mt-4">
                                 <a href="{{ route('profile.index') }}" class="btn btn-outline-secondary">
                                     <i class="bi bi-arrow-left"></i> Kembali
@@ -148,6 +174,7 @@
             </div>
         </div>
     </div>
+
 
     <footer class="footer-area section_gap">
         <div class="container">
@@ -168,15 +195,20 @@
                         <p>Stay update with our latest</p>
                         <div class="" id="mc_embed_signup">
 
+
                             <form target="_blank" novalidate="true"
                                 action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                                 method="get" class="form-inline">
 
+
                                 <div class="d-flex flex-row">
+
 
                                     <input class="form-control" name="EMAIL" placeholder="Enter Email"
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
                                         required="" type="email">
+
+
 
 
                                     <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right"
@@ -185,6 +217,7 @@
                                         <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1"
                                             value="" type="text">
                                     </div>
+
 
                                     <!-- <div class="col-lg-4 col-md-4">
              <button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
@@ -238,7 +271,9 @@
     </footer>
     <!-- End footer Area -->
 
+
     <!-- End Area -->
+
 
     <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
@@ -253,4 +288,7 @@
     <script src="{{ asset('js/main.js') }}"></script>
 </body>
 
+
 </html>
+
+
