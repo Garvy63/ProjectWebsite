@@ -9,8 +9,14 @@ class OrderItem extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'order_item_id';
-    protected $guarded = ['order_item_id'];
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'quantity',
+        'price',
+        'unit_cost',
+        'item_total',
+    ];
 
     public function order()
     {

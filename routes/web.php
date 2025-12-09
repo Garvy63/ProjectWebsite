@@ -66,19 +66,23 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     // Admin Dashboard
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin');
     
-    // Product Management
-    Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
-    Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
-    Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
-    Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
-    Route::put('/products/{id}', [ProductController::class, 'update'])->name('admin.products.update');
-    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+    // Products Resource
+    Route::resource('products', ProductController::class)->names('admin.products');
     
-    // Order Management (HANYA SATU KALI)
-    Route::get('/orders', [OrderAdminController::class, 'index'])->name('admin.orders.index');
-    Route::get('/orders/{order_id}', [OrderAdminController::class, 'show'])->name('admin.orders.show');
-    Route::put('/orders/{order_id}/status', [OrderAdminController::class, 'updateStatus'])->name('admin.orders.updateStatus');
-    Route::put('/orders/{order_id}/payment', [OrderAdminController::class, 'updatePaymentStatus'])->name('admin.orders.updatePaymentStatus');
+    // Orders CRUD
+    Route::prefix('orders')->name('admin.orders.')->group(function () {
+        Route::get('/', [OrderAdminController::class, 'index'])->name('index');
+        Route::get('/create', [OrderAdminController::class, 'create'])->name('create');
+        Route::post('/', [OrderAdminController::class, 'store'])->name('store');
+        Route::get('/{order_id}', [OrderAdminController::class, 'show'])->name('show');
+        Route::get('/{order_id}/edit', [OrderAdminController::class, 'edit'])->name('edit');
+        Route::put('/{order_id}', [OrderAdminController::class, 'update'])->name('update');
+        Route::delete('/{order_id}', [OrderAdminController::class, 'destroy'])->name('destroy');
+        
+        // Additional Actions
+        Route::put('/{order_id}/status', [OrderAdminController::class, 'updateStatus'])->name('updateStatus');
+        Route::put('/{order_id}/payment', [OrderAdminController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
+    });
 });
 
 // Redirect /admindashboard to /admin/dashboard

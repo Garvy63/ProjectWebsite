@@ -20,14 +20,17 @@ class Product extends Model
 
 
     protected $fillable = [
-        'product_name',
-        'category',
-        'product_image',
-        'unit_price',
-        'description',
-        'stock',
+        'product_name', 
+        'category', 
+        'product_image', 
+        'unit_price',  // Pastikan nama kolom sesuai
+        'description', 
+        'stock'
     ];
 
+    protected $casts = [
+        'unit_price' => 'decimal:2',
+    ];
 
     public $timestamps = false;
 

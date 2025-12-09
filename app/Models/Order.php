@@ -9,9 +9,11 @@ class Order extends Model
 {
     use HasFactory;
 
-    // TAMBAHKAN INI - Karena primary key adalah order_id, bukan id
+    // Tambahkan ini jika primary key adalah order_id, bukan id
     protected $primaryKey = 'order_id';
-    
+    public $incrementing = true;
+    protected $keyType = 'int';
+
     protected $fillable = [
         'user_id',
         'first_name',
@@ -24,6 +26,7 @@ class Order extends Model
         'country',
         'payment_method',
         'payment_status',
+        'status', // Tambahkan ini
         'subtotal',
         'shipping_cost',
         'total',
